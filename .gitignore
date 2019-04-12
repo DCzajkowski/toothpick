@@ -26,4 +26,4 @@ toothpick-*.tar
 /.idea
 
 # Built executable
-toothpick
+/toothpick
