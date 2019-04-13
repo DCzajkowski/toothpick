@@ -1,12 +1,12 @@
 defmodule Toothpick.Tokenizer do
-  require Toothpick.Macros
+  import Toothpick.Macros, only: [tokens: 2]
   use Toothpick.Constants
 
   def tokens(""), do: []
   def tokens(" " <> tail), do: tokens(tail)
 
-  Toothpick.Macros.tokenize(:new_line, :new_line_chars)
-  Toothpick.Macros.tokenize(:punctuator, :punctuators)
+  tokens(:new_line, :new_line_chars)
+  tokens(:punctuator, :punctuators)
 
   def tokens(any) do
     cond do
