@@ -4,6 +4,7 @@ defmodule Toothpick.Tokenizer do
 
   def tokens(""), do: []
   def tokens(" " <> tail), do: tokens(tail)
+  def tokens("\n\n" <> tail), do: tokens("\n" <> tail)
 
   tokens(:new_line, :new_line_chars)
   tokens(:punctuator, :punctuators)
