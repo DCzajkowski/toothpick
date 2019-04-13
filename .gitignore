@@ -24,6 +24,7 @@ toothpick-*.tar
 
 # IntelliJ config
 /.idea
+/*.iml
 
 # Built executable
 /toothpick

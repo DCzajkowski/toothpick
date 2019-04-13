@@ -10,7 +10,7 @@ defmodule Toothpick.Constants do
       end
 
       def get(:keywords) do
-        ["fun", "return"]
+        ["fun", "return", "if"]
       end
     end
   end

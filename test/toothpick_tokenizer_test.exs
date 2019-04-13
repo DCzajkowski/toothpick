@@ -49,7 +49,7 @@ defmodule ToothpickTokenizerTest do
       {:identifier, "fib"},
       {:variable, "n"},
       {:new_line, "\n"},
-      {:identifier, "if"},
+      {:keyword, "if"},
       {:identifier, "Math"},
       {:punctuator, "."},
       {:identifier, "le"},
