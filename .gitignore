@@ -27,3 +27,6 @@ toothpick-*.tar
 
 # Built executable
 /toothpick
+
+# Remove built files
+/.elixir_ls
