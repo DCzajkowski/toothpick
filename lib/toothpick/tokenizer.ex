@@ -1,14 +1,24 @@
 defmodule Toothpick.Tokenizer do
   require Toothpick.Macros
+  use Toothpick.Constants
 
   def tokens(""), do: []
   def tokens(" " <> tail), do: tokens(tail)
 
-  Toothpick.Macros.tokenize(:new_line, ["\n", "\r\n"])
-  Toothpick.Macros.tokenize(:punctuator, ["->", "(", ")", "."])
+  Toothpick.Macros.tokenize(:new_line)
+  Toothpick.Macros.tokenize(:punctuator)
 
   def tokens(any) do
-    identifier(any)
+    variable(any)
+  end
+
+  defp variable(any) do
+    punctuators = Enum.join get(:punctuator)
+
+    case Regex.run(~r/\A@([^\s#{punctuators}]+)(.*)\Z/s, any) do
+      [_, variable, tail] -> [{:variable, variable}] ++ tokens(tail)
+      _ -> identifier(any)
+    end
   end
 
   defp identifier(any) do
@@ -26,5 +36,6 @@ defmodule Toothpick.Tokenizer do
   end
 
   defp identifier_or_keyword("fun"), do: {:keyword, "fun"}
+  defp identifier_or_keyword("return"), do: {:keyword, "return"}
   defp identifier_or_keyword(any), do: {:identifier, any}
 end
