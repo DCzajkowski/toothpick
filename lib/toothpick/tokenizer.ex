@@ -5,15 +5,15 @@ defmodule Toothpick.Tokenizer do
   def tokens(""), do: []
   def tokens(" " <> tail), do: tokens(tail)
 
-  Toothpick.Macros.tokenize(:new_line)
-  Toothpick.Macros.tokenize(:punctuator)
+  Toothpick.Macros.tokenize(:new_line, :new_line_chars)
+  Toothpick.Macros.tokenize(:punctuator, :punctuators)
 
   def tokens(any) do
     variable(any)
   end
 
   defp variable(any) do
-    punctuators = Enum.join get(:punctuator)
+    punctuators = Enum.join get(:punctuators)
 
     case Regex.run(~r/\A@([^\s#{punctuators}]+)(.*)\Z/s, any) do
       [_, variable, tail] -> [{:variable, variable}] ++ tokens(tail)

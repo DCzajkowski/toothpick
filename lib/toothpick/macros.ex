@@ -1,8 +1,8 @@
 defmodule Toothpick.Macros do
   use Toothpick.Constants
 
-  defmacro tokenize(name) do
-    Enum.map(get(name), fn symbol -> create(name, symbol) end)
+  defmacro tokenize(name, symbols) do
+    Enum.map(get(symbols), fn symbol -> create(name, symbol) end)
   end
 
   defp create(name, symbol) do
