@@ -10,10 +10,18 @@ defmodule Toothpick.Tokenizer do
 
   def tokens(any) do
     cond do
+      (r = try_matching_integer(any)) != :not_matched -> r
       (r = try_matching_variable(any)) != :not_matched -> r
       (r = try_matching_identifier(any)) != :not_matched -> r
       (r = try_matching_string(any)) != :not_matched -> r
       true -> raise(ArgumentError, "Could not tokenize #{any}")
+    end
+  end
+
+  defp try_matching_integer(any) do
+    case Regex.run(~r/\A([0-9]+)(.*)\Z/s, any) do
+      [_, integer, tail] -> [{:integer, integer}] ++ tokens(tail)
+      _ -> :not_matched
     end
   end
 
