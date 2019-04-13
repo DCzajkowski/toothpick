@@ -44,11 +44,3 @@ defmodule ToothpickTokenizerTest do
   end
 
 end
-
-# {:identifier, "print"},
-# {:punctuator, "("},
-# {:string, "Hello, World!"},
-# {:punctuator, ")"},
-# {:new_line, "\n"},
-# {:punctuator, "."},
-# {:new_line, "\n"},
