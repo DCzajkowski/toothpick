@@ -8,8 +8,8 @@ defmodule ToothpickTokenizerTest do
       |> File.read!()
   end
 
-  test "correctly tokenizes function without arguments returning void" do
-    assert Toothpick.Tokenizer.tokens(stub("function_without_arguments_returning_void")) == [
+  test "correctly tokenizes function without arguments" do
+    assert Toothpick.Tokenizer.tokens(stub("function_without_arguments")) == [
       {:keyword, "fun"},
       {:identifier, "main"},
       {:new_line, "\n"},
@@ -21,10 +21,10 @@ defmodule ToothpickTokenizerTest do
     ]
   end
 
-  test "correctly tokenizes function with arguments returning void" do
-    assert Toothpick.Tokenizer.tokens(stub("function_with_arguments_returning_void")) == [
+  test "correctly tokenizes function with arguments" do
+    assert Toothpick.Tokenizer.tokens(stub("function_with_arguments")) == [
       {:keyword, "fun"},
-      {:identifier, "main"},
+      {:identifier, "add"},
       {:variable, "a"},
       {:variable, "b"},
       {:new_line, "\n"},
