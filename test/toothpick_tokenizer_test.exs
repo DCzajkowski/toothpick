@@ -148,4 +148,46 @@ defmodule ToothpickTokenizerTest do
       {:new_line, "\n"},
     ]
   end
+
+  test "correctly tokenizes function with multiline arguments" do
+    assert Toothpick.Tokenizer.tokens(stub("function_with_multiline_arguments")) == [
+      {:new_line, "\n"},
+      {:line_comment, "this is comment "},
+      {:new_line, "\n"},
+      {:keyword, "fun"},
+      {:identifier, "func"},
+      {:new_line, "\n"},
+      {:variable, "first"},
+      {:new_line, "\n"},
+      {:variable, "second"},
+      {:new_line, "\n"},
+      {:variable, "third"},
+      {:new_line, "\n"},
+      {:punctuator, "->"},
+      {:new_line, "\n"},
+      {:keyword, "if"},
+      {:identifier, "eq"},
+      {:punctuator, "("},
+      {:variable, "second"},
+      {:punctuator, ","},
+      {:integer, "1"},
+      {:punctuator, ")"},
+      {:new_line, "\n"},
+      {:keyword, "return"},
+      {:integer, "2"},
+      {:punctuator, "."},
+      {:new_line, "\n"},
+      {:new_line, "\n"},
+      {:keyword, "return"},
+      {:identifier, "add"},
+      {:punctuator, "("},
+      {:variable, "first"},
+      {:punctuator, ","},
+      {:variable, "third"},
+      {:punctuator, ")"},
+      {:new_line, "\n"},
+      {:punctuator, "."},
+      {:new_line, "\n"},
+    ]
+  end
 end

@@ -15,6 +15,7 @@ defmodule Toothpick.Tokenizer do
       (r = try_matching_variable(any)) != :not_matched -> r
       (r = try_matching_identifier(any)) != :not_matched -> r
       (r = try_matching_string(any)) != :not_matched -> r
+      (r = try_matching_line_comment(any)) != :not_matched -> r
       true -> raise(ArgumentError, "Could not tokenize #{any}")
     end
   end
@@ -47,6 +48,13 @@ defmodule Toothpick.Tokenizer do
   defp try_matching_string(any) do
     case Regex.run(~r/\A'([^']*)'(.*)\Z/s, any) do
       [_, string, tail] -> [{:string, string}] ++ tokens(tail)
+      _ -> :not_matched
+    end
+  end
+
+  defp try_matching_line_comment(any) do
+    case Regex.run(~r/\A#[\s]*([^\n]*)\n(.*)\Z/s, any) do
+      [_, comment, tail] -> [{:line_comment, comment}] ++ tokens(tail)
       _ -> :not_matched
     end
   end
