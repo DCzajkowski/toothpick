@@ -1,3 +1,0 @@
-fun main -> Void
-    io.print('Hello, World!')
-.
