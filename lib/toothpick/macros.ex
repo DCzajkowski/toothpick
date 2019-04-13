@@ -2,7 +2,7 @@ defmodule Toothpick.Macros do
   use Toothpick.Constants
 
   @doc """
-  Creates functions tokens() for each symbol in symbols argument
+  Creates function tokens/1 for each symbol in symbols argument
 
   name (atom) - name to be used for symbol identification
   symbols (atom) - symbols to be retrieved from the Toothpick.Constants module
