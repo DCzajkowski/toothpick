@@ -40,7 +40,7 @@ defmodule Toothpick.Tokenizer do
     end
   end
 
-  defp identifier_or_keyword("fun"), do: {:keyword, "fun"}
-  defp identifier_or_keyword("return"), do: {:keyword, "return"}
-  defp identifier_or_keyword(any), do: {:identifier, any}
+  def identifier_or_keyword(any) do
+    if any in get(:keywords), do: {:keyword, any}, else: {:identifier, any}
+  end
 end
