@@ -9,29 +9,34 @@ defmodule Toothpick.Tokenizer do
   Toothpick.Macros.tokenize(:punctuator, :punctuators)
 
   def tokens(any) do
-    variable(any)
+    cond do
+      (r = try_matching_variable(any)) != :not_matched -> r
+      (r = try_matching_identifier(any)) != :not_matched -> r
+      (r = try_matching_string(any)) != :not_matched -> r
+      true -> raise(ArgumentError, "Could not tokenize #{any}")
+    end
   end
 
-  defp variable(any) do
+  defp try_matching_variable(any) do
     punctuators = Enum.join get(:punctuators)
 
     case Regex.run(~r/\A@([^\s#{punctuators}]+)(.*)\Z/s, any) do
       [_, variable, tail] -> [{:variable, variable}] ++ tokens(tail)
-      _ -> identifier(any)
+      _ -> :not_matched
     end
   end
 
-  defp identifier(any) do
+  defp try_matching_identifier(any) do
     case Regex.run(~r/\A([a-zA-Z]+)(.*)\Z/s, any) do
       [_, identifier_or_keyword, tail] -> [identifier_or_keyword(identifier_or_keyword)] ++ tokens(tail)
-      _ -> string(any)
+      _ -> :not_matched
     end
   end
 
-  defp string(any) do
+  defp try_matching_string(any) do
     case Regex.run(~r/\A'([^']*)'(.*)\Z/s, any) do
       [_, string, tail] -> [{:string, string}] ++ tokens(tail)
-      _ -> raise(ArgumentError, "Could not tokenize #{any}")
+      _ -> :not_matched
     end
   end
 
