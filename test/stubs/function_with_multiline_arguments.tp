@@ -1,0 +1,13 @@
+
+# this is comment 
+
+fun func 
+    @first
+    @second
+    @third
+->
+    if eq(@second, 1) 
+        return 2.
+    
+    return add(@first, @third)
+.
