@@ -45,7 +45,7 @@ defmodule ToothpickParserTest do
     ]) == [
       {:function_declaration, [
         {:keyword, "fun"},
-        {:identifier, "main"},
+        {:identifier, "add"},
         {:function_arguments, [
           {:variable, "a"},
           {:variable, "b"},
@@ -54,7 +54,7 @@ defmodule ToothpickParserTest do
           {:return_statement, [
             {:keyword, "return"},
             {:expression, [
-              {:string, "Hello, World!"},
+              {:variable, "a"},
             ]},
           ]},
         ]},
