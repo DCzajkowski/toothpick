@@ -8,6 +8,6 @@ defmodule Mix.Tasks.Tokenize do
 
     {:ok, content} = File.read(filename)
 
-    IO.puts Toothpick.Tokenizer.tokens(content)
+    IO.puts(Toothpick.Tokenizer.tokens(content))
   end
 end

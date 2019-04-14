@@ -15,6 +15,7 @@ defmodule Toothpick.Parser do
     subtree = {:function_declaration, children}
     function(tree ++ [subtree], tail)
   end
+
   def function(tree, tail), do: {tree, tail}
 
   def arguments(tree, [{:variable, name} | tail]) do
@@ -23,12 +24,14 @@ defmodule Toothpick.Parser do
     subtree = {:function_arguments, children}
     {tree ++ [subtree], tail}
   end
+
   def arguments(tree, tail), do: {tree, tail}
 
   def accumulate_args(args, [{:variable, name} | tail]) do
     args = args ++ [{:variable, name}]
     accumulate_args(args, tail)
   end
+
   def accumulate_args(args, tail), do: {args, tail}
 
   def body(tree, [{:new_line, _} | tail]) do
@@ -43,6 +46,7 @@ defmodule Toothpick.Parser do
     subtree = {:return_statement, children}
     statement(tree ++ [subtree], tail)
   end
+
   def statement(tree, tail), do: {tree, tail}
 
   def expression(tree, [{:string, value} | tail]) do
