@@ -14,34 +14,51 @@ defmodule ToothpickParserTest do
       {:new_line, "\n"},
       {:punctuator, "."},
       {:new_line, "\n"},
-    ]) == %{
-      type: "Program",
-      body: [
-        %{
-          type: "FunctionDeclaration",
-          id: %{
-            type: "Identifier",
-            name: "main"
-          },
-          params: [],
-          body: %{
-            type: "BlockStatement",
-            body: [
-              %{
-                type: "ReturnStatement",
-                argument: %{
-                  type: "Literal",
-                  value: "Hello, World!",
-                  raw: "'Hello, World!'"
-                }
-              }
-            ]
-          },
-          generator: false,
-          expression: false,
-          async: false
-        }
-      ],
-    }
+    ]) == [
+      {:function_declaration, [
+        {:keyword, "fun"},
+        {:identifier, "main"},
+        {:function_body, [
+          {:return_statement, [
+            {:keyword, "return"},
+            {:expression, [
+              {:string, "Hello, World!"},
+            ]},
+          ]},
+        ]},
+      ]},
+    ]
+  end
+
+  test "correctly parses function with arguments" do
+    assert parse([
+      {:keyword, "fun"},
+      {:identifier, "add"},
+      {:variable, "a"},
+      {:variable, "b"},
+      {:new_line, "\n"},
+      {:keyword, "return"},
+      {:variable, "a"},
+      {:new_line, "\n"},
+      {:punctuator, "."},
+      {:new_line, "\n"},
+    ]) == [
+      {:function_declaration, [
+        {:keyword, "fun"},
+        {:identifier, "main"},
+        {:function_arguments, [
+          {:variable, "a"},
+          {:variable, "b"},
+        ]},
+        {:function_body, [
+          {:return_statement, [
+            {:keyword, "return"},
+            {:expression, [
+              {:string, "Hello, World!"},
+            ]},
+          ]},
+        ]},
+      ]},
+    ]
   end
 end

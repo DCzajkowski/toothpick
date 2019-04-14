@@ -59,34 +59,7 @@ defmodule Toothpick.Parser do
 
   def expression(tree, [{:string, value} | tail]) do
     children = [{:string, value}]
-    subtree = {:expresion, children}
+    subtree = {:expression, children}
     {tree ++ [subtree], tail}
   end
-
-  # def parser(tokens) do
-  #   %{
-  #     type: "FunctionDeclaration",
-  #     id: %{
-  #       type: "Identifier",
-  #       name: "main"
-  #     },
-  #     params: [],
-  #     body: %{
-  #       type: "BlockStatement",
-  #       body: [
-  #         %{
-  #           type: "ReturnStatement",
-  #           argument: %{
-  #             type: "Literal",
-  #             value: "Hello, World!",
-  #             raw: "'Hello, World!'"
-  #           }
-  #         }
-  #       ]
-  #     },
-  #     generator: false,
-  #     expression: false,
-  #     async: false
-  #   }
-  # end
 end
