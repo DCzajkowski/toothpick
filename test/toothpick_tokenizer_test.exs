@@ -1,4 +1,5 @@
 defmodule ToothpickTokenizerTest do
+  import Toothpick.Tokenizer, only: [tokens: 1]
   use ExUnit.Case
   doctest Toothpick.Tokenizer
 
@@ -9,7 +10,7 @@ defmodule ToothpickTokenizerTest do
   end
 
   test "correctly tokenizes function without arguments" do
-    assert Toothpick.Tokenizer.tokens(stub("function_without_arguments")) == [
+    assert tokens(stub("function_without_arguments")) == [
       {:keyword, "fun"},
       {:identifier, "main"},
       {:new_line, "\n"},
@@ -22,7 +23,7 @@ defmodule ToothpickTokenizerTest do
   end
 
   test "correctly tokenizes function with arguments" do
-    assert Toothpick.Tokenizer.tokens(stub("function_with_arguments")) == [
+    assert tokens(stub("function_with_arguments")) == [
       {:keyword, "fun"},
       {:identifier, "add"},
       {:variable, "a"},
@@ -44,7 +45,7 @@ defmodule ToothpickTokenizerTest do
   end
 
   test "correctly tokenizes function with multiline arguments" do
-    assert Toothpick.Tokenizer.tokens(stub("function_with_multiline_arguments")) == [
+    assert tokens(stub("function_with_multiline_arguments")) == [
       {:new_line, "\n"},
       {:line_comment, "this is comment "},
       {:new_line, "\n"},
@@ -86,7 +87,7 @@ defmodule ToothpickTokenizerTest do
   end
 
   test "correctly tokenizes multiple advanced functions" do
-    assert Toothpick.Tokenizer.tokens(stub("multiple_advanced_functions")) == [
+    assert tokens(stub("multiple_advanced_functions")) == [
       {:keyword, "fun"},
       {:identifier, "fib"},
       {:variable, "n"},
@@ -190,5 +191,4 @@ defmodule ToothpickTokenizerTest do
       {:new_line, "\n"},
     ]
   end
-
 end
