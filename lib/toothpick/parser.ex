@@ -1,10 +1,5 @@
 defmodule Toothpick.Parser do
   def parse(tokens) do
-    # tokens
-    # %{
-    #   type: "Program",
-    #   body: []
-    # }
     program(tokens)
   end
 
