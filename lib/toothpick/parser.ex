@@ -1,7 +1,5 @@
 defmodule Toothpick.Parser do
-  def parse(tokens) do
-    program(tokens)
-  end
+  def parse(tokens), do: program(tokens)
 
   def program(tokens) do
     {children, _} = function([], tokens)
