@@ -46,7 +46,7 @@ defmodule ToothpickParserTest do
       {:function_declaration, [
         {:keyword, "fun"},
         {:identifier, "main"},
-        {:arguments, [
+        {:function_arguments, [
           {:variable, "a"},
           {:variable, "b"},
         ]},
