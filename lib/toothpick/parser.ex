@@ -1,9 +1,11 @@
 defmodule Toothpick.Parser do
   def parse(tokens) do
-    %{
-      type: "Program",
-      body: program(tokens)
-    }
+    # tokens
+    # %{
+    #   type: "Program",
+    #   body: []
+    # }
+    program(tokens)
   end
 
   def program(tokens) do
@@ -12,8 +14,8 @@ defmodule Toothpick.Parser do
     children
   end
 
-  def function(tree, [{:keyword, "fun"}, {:indentfier, name} | tail]) do
-    children = [{:keyword, "fun"}, {:indentfier, name}]
+  def function(tree, [{:keyword, "fun"}, {:identifier, name} | tail]) do
+    children = [{:keyword, "fun"}, {:identifier, name}]
     {children, tail} = body(children, tail)
     subtree = {:function_declaration, children}
     function(tree ++ [subtree], tail)
