@@ -29,10 +29,10 @@ defmodule Toothpick.Parser do
     {tree ++ [subtree], tail}
   end
 
-  def statement(tree, [{:keyword, key} | tail]) when key in ["return"] do
-    children = [{:keyword, key}]
+  def statement(tree, [{:keyword, "return"} | tail]) do
+    children = [{:keyword, "return"}]
     {children, tail} = expression(children, tail)
-    subtree = {:statement, children}
+    subtree = {:return_statement, children}
     statement(tree ++ [subtree], tail)
   end
 
