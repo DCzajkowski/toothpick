@@ -14,34 +14,20 @@ defmodule ToothpickParserTest do
       {:new_line, "\n"},
       {:punctuator, "."},
       {:new_line, "\n"},
-    ]) == %{
-      type: "Program",
-      body: [
-        %{
-          type: "FunctionDeclaration",
-          id: %{
-            type: "Identifier",
-            name: "main"
-          },
-          params: [],
-          body: %{
-            type: "BlockStatement",
-            body: [
-              %{
-                type: "ReturnStatement",
-                argument: %{
-                  type: "Literal",
-                  value: "Hello, World!",
-                  raw: "'Hello, World!'"
-                }
-              }
-            ]
-          },
-          generator: false,
-          expression: false,
-          async: false
-        }
-      ],
-    }
+    ]) == [
+      {:function_declaration, [
+        {:keyword, "fun"},
+        {:identifier, "main"},
+        {:function_body, [
+          {:return_statement, [
+            {:keyword, "return"},
+            {:expression, [
+              {:string, "Hello, World!"},
+            ]},
+          ]},
+        ]},
+      ]},
+    ]
+  end
   end
 end
