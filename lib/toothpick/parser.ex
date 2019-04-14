@@ -42,7 +42,7 @@ defmodule Toothpick.Parser do
 
   def expression(tree, [{:string, value} | tail]) do
     children = [{:string, value}]
-    subtree = {:expresion, children}
+    subtree = {:expression, children}
     {tree ++ [subtree], tail}
   end
 end
