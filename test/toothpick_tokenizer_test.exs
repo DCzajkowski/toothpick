@@ -1,6 +1,7 @@
 defmodule ToothpickTokenizerTest do
   import Toothpick.Tokenizer, only: [tokens: 1]
   use ExUnit.Case
+
   doctest Toothpick.Tokenizer
 
   defp stub(filename) do
