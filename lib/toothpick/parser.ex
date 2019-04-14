@@ -1,16 +1,10 @@
 defmodule Toothpick.Parser do
   def parse(tokens) do
-    # tokens
-    # %{
-    #   type: "Program",
-    #   body: []
-    # }
     program(tokens)
   end
 
   def program(tokens) do
     {children, _} = function([], tokens)
-
     children
   end
 
@@ -21,22 +15,19 @@ defmodule Toothpick.Parser do
     subtree = {:function_declaration, children}
     function(tree ++ [subtree], tail)
   end
-
   def function(tree, tail), do: {tree, tail}
 
-
-  def arguments(tree, [{:variable, name} | tail] ) do
-      children = [{:variable, name}]
-      {children, tail} = accumulate_args(children, tail)
-      subtree = {:function_arguments, children}
-      {tree ++ [subtree], tail}
+  def arguments(tree, [{:variable, name} | tail]) do
+    children = [{:variable, name}]
+    {children, tail} = accumulate_args(children, tail)
+    subtree = {:function_arguments, children}
+    {tree ++ [subtree], tail}
   end
   def arguments(tree, tail), do: {tree, tail}
 
   def accumulate_args(args, [{:variable, name} | tail]) do
-      args = args ++ [{:variable, name}]
-      {args, tail} = accumulate_args(args, tail)
-      {args, tail}
+    args = args ++ [{:variable, name}]
+    accumulate_args(args, tail)
   end
   def accumulate_args(args, tail), do: {args, tail}
 
@@ -52,10 +43,7 @@ defmodule Toothpick.Parser do
     subtree = {:return_statement, children}
     statement(tree ++ [subtree], tail)
   end
-
-  def statement(tree, tail) do
-    {tree, tail}
-  end
+  def statement(tree, tail), do: {tree, tail}
 
   def expression(tree, [{:string, value} | tail]) do
     children = [{:string, value}]
