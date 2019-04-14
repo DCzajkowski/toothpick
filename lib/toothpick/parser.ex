@@ -62,4 +62,10 @@ defmodule Toothpick.Parser do
     subtree = {:expression, children}
     {tree ++ [subtree], tail}
   end
+
+  def expression(tree, [{:variable, value} | tail]) do
+    children = [{:variable, value}]
+    subtree = {:expression, children}
+    {tree ++ [subtree], tail}
+  end
 end
