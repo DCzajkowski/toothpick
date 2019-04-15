@@ -88,4 +88,44 @@ defmodule ToothpickParserTest do
       ]
     )
   end
+
+  test "correctly parses function with boolean if statement" do
+    assert(
+      parse(
+        keyword: "fun",
+        identifier: "abcd",
+        variable: "n",
+        new_line: "\n",
+        keyword: "if",
+        variable: "n",
+        new_line: "\n",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n",
+        keyword: "return",
+        integer: "2",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        function_declaration: [
+          keyword: "fun",
+          identifier: "abcd",
+          function_arguments: [variable: "n"],
+          function_body: [
+            if_statement: [
+              keyword: "if",
+              logical_expression: [variable: "n"],
+              function_body: [
+                return_statement: [keyword: "return", expression: [integer: "1"]]
+              ]
+            ],
+            return_statement: [keyword: "return", expression: [integer: "2"]]
+          ]
+        ]
+      ]
+    )
+  end
 end
