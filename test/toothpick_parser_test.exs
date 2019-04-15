@@ -31,32 +31,36 @@ defmodule ToothpickParserTest do
   end
 
   test "correctly parses function without arguments and shortened body" do
-    assert parse(
-      keyword: "fun",
-      identifier: "main",
-      punctuator: "."
-    ) == [
-      function_declaration: [
+    assert(
+      parse(
         keyword: "fun",
         identifier: "main",
-        function_body: [],
-      ],
-    ]
+        punctuator: "."
+      ) == [
+        function_declaration: [
+          keyword: "fun",
+          identifier: "main",
+          function_body: []
+        ]
+      ]
+    )
   end
 
   test "correctly parses function without arguments and body" do
-    assert parse(
-      keyword: "fun",
-      identifier: "main",
-      new_line: "\n",
-      punctuator: "."
-    ) == [
-      function_declaration: [
+    assert(
+      parse(
         keyword: "fun",
         identifier: "main",
-        function_body: [],
-      ],
-    ]
+        new_line: "\n",
+        punctuator: "."
+      ) == [
+        function_declaration: [
+          keyword: "fun",
+          identifier: "main",
+          function_body: []
+        ]
+      ]
+    )
   end
 
   test "correctly parses function with arguments" do

@@ -37,6 +37,7 @@ defmodule Toothpick.Parser do
     subtree = {:function_body, children}
     {tree ++ [subtree], tail}
   end
+
   def body(tree, [{:punctuator, "."} | tail]) do
     subtree = {:function_body, []}
     {tree ++ [subtree], tail}
@@ -48,6 +49,7 @@ defmodule Toothpick.Parser do
     subtree = {:return_statement, children}
     statement(tree ++ [subtree], tail)
   end
+
   def statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
   def statement(tree, [{:punctuator, "."} | tail]), do: {tree, tail}
 
