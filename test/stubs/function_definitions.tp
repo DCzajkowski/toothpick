@@ -1,12 +1,12 @@
 # functions
-fun func. 
+fun func.
 fun func @a.
 fun func @a @b
-    return add(@a, @b)
+  return add(@a, @b)
 .
-fun func 
-    @a
-    @b
+fun func
+  @a
+  @b
 ->
-    return add(@a, @b) 
+  return add(@a, @b)
 .

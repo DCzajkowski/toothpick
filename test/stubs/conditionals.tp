@@ -1,14 +1,14 @@
-# ifs 
+# ifs
 if @cond -> return 1.
 if @cond
-    return 1.
+  return 1.
 if @cond ->
-    return 1.
+  return 1.
 if @cond
-    return 1
+  return 1
 .
-if 
-    @cond
+if
+  @cond
 ->
-    return 1
+  return 1
 .
