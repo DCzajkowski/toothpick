@@ -53,7 +53,7 @@ defmodule ToothpickTokenizerTest do
     assert(
       tokens(stub("function_with_multiline_arguments")) == [
         new_line: "\n",
-        line_comment: "this is comment ",
+        line_comment: "this is comment",
         new_line: "\n",
         keyword: "fun",
         identifier: "func",
@@ -76,8 +76,8 @@ defmodule ToothpickTokenizerTest do
         new_line: "\n",
         keyword: "return",
         integer: "2",
-        punctuator: ".",
         new_line: "\n",
+        punctuator: ".",
         new_line: "\n",
         keyword: "return",
         identifier: "add",
