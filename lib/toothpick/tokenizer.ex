@@ -28,9 +28,10 @@ defmodule Toothpick.Tokenizer do
   end
 
   defp try_matching_variable(any) do
-    punctuators = get(:punctuators)
+    punctuators =
+      get(:punctuators)
       |> Enum.map(fn x -> "\\" <> x end)
-      |> Enum.join
+      |> Enum.join()
 
     case Regex.run(~r/\A@([^\s#{punctuators}]+)(.*)\Z/s, any) do
       [_, variable, tail] -> [{:variable, variable}] ++ tokens(tail)
