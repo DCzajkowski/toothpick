@@ -44,8 +44,8 @@ defmodule Toothpick.Parser do
     subtree = {:return_statement, children}
     statement(tree ++ [subtree], tail)
   end
-
-  def statement(tree, tail), do: {tree, tail}
+  def statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
+  def statement(tree, [{:punctuator, "."} | tail]), do: {tree, tail}
 
   def expression(tree, [{:string, value} | tail]) do
     children = [{:string, value}]
