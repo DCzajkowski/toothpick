@@ -1,0 +1,27 @@
+# Function declarations
+
+fun foo.
+
+fun foo @a @b.
+
+fun foo
+  @a
+  @b
+->.
+
+# Function definitions
+
+fun foo
+  return 1
+.
+
+fun foo @a @b
+  return 1
+.
+
+fun foo
+  @a
+  @b
+->
+  return 1
+.
