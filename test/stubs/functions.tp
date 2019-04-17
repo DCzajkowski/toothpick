@@ -1,27 +1,36 @@
 # Function declarations
 
-fun foo.
+fun main ->.
 
-fun foo @a @b.
+fun main @a @b ->.
 
-fun foo
-  @a
-  @b
+fun main
+    @a
+    @b
 ->.
 
 # Function definitions
 
-fun foo
-  return 1
+fun main -> return 1.
+
+fun main ->
+    return 1
 .
 
-fun foo @a @b
-  return 1
+fun main @a @b -> return 1.
+
+fun main @a @b ->
+    return 1
 .
 
-fun foo
-  @a
-  @b
+fun main
+    @a
+    @b
+-> return 1.
+
+fun main
+    @a
+    @b
 ->
-  return 1
+    return 1
 .
