@@ -26,10 +26,13 @@ defmodule Toothpick.Parser do
 
     {tree ++ [{:function_arguments, children}], tail}
   end
-
-  defp arguments(tree, tail), do: {tree, tail}
+  defp arguments(tree, tail) do
+    subtree = {:function_arguments, []}
+    {tree ++ [subtree], tail}
+  end
   defp accumulate_args(args, [{:variable, name} | tail]), do: accumulate_args(args ++ [{:variable, name}], tail)
   defp accumulate_args(args, tail), do: {args, tail}
+
 
   # Function's body always starts with a {:new_line, _} and is terminated by a {:punctuator, '.'}.
   defp body(tree, [{:new_line, _} | tail]) do

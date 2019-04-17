@@ -1,0 +1,146 @@
+# functions
+
+#1
+# kropka w nowej lini       : tak 
+# argumenty                 : tak 
+# argumenty w wielu liniach : tak 
+# body                      : tak 
+fun foo 
+  @a
+  @b
+-> 
+  return 1
+.
+
+#2
+# kropka w nowej lini       : tak 
+# argumenty                 : tak 
+# argumenty w wielu liniach : tak 
+# body                      : nie 
+fun foo 
+  @a
+  @b
+-> 
+.
+
+#3
+# kropka w nowej lini       : tak 
+# argumenty                 : tak 
+# argumenty w wielu liniach : nie 
+# body                      : tak 
+fun foo @a @b ->
+  return 1
+.
+
+#4
+# kropka w nowej lini       : tak 
+# argumenty                 : tak 
+# argumenty w wielu liniach : nie 
+# body                      : nie 
+fun foo @a @b ->
+.
+
+#5
+# kropka w nowej lini       : tak 
+# argumenty                 : nie 
+# argumenty w wielu liniach : tak 
+# body                      : tak 
+fun foo
+->
+  return 1
+.
+
+
+#6
+# kropka w nowej lini       : tak 
+# argumenty                 : nie 
+# argumenty w wielu liniach : tak 
+# body                      : nie
+fun foo
+->
+.
+
+#7
+# kropka w nowej lini       : tak 
+# argumenty                 : nie 
+# argumenty w wielu liniach : nie 
+# body                      : tak 
+fun foo ->
+  return 1
+.
+
+#8
+# kropka w nowej lini       : tak 
+# argumenty                 : nie 
+# argumenty w wielu liniach : nie 
+# body                      : nie 
+fun foo ->
+.
+
+#9
+# kropka w nowej lini       : nie 
+# argumenty                 : tak 
+# argumenty w wielu liniach : tak 
+# body                      : tak 
+fun foo
+  @a
+  @b
+-> 
+  return 1.
+
+#10
+# kropka w nowej lini       : nie 
+# argumenty                 : tak 
+# argumenty w wielu liniach : tak 
+# body                      : nie 
+fun foo
+  @a
+  @b
+->.
+
+#11
+# kropka w nowej lini       : nie 
+# argumenty                 : tak 
+# argumenty w wielu liniach : nie 
+# body                      : tak 
+fun foo @a @b ->
+  return 1.
+
+#12
+# kropka w nowej lini       : nie 
+# argumenty                 : tak 
+# argumenty w wielu liniach : nie 
+# body                      : nie 
+fun foo @a @b ->.
+
+#13
+# kropka w nowej lini       : nie 
+# argumenty                 : nie 
+# argumenty w wielu liniach : tak 
+# body                      : tak 
+fun foo
+->
+  return 1.
+
+#14
+# kropka w nowej lini       : nie 
+# argumenty                 : nie 
+# argumenty w wielu liniach : tak 
+# body                      : nie 
+fun foo
+->.
+
+#15
+# kropka w nowej lini       : nie 
+# argumenty                 : nie 
+# argumenty w wielu liniach : nie 
+# body                      : tak 
+fun foo ->
+  return 1.
+
+#16
+# kropka w nowej lini       : nie 
+# argumenty                 : nie 
+# argumenty w wielu liniach : nie 
+# body                      : nie 
+fun foo ->.

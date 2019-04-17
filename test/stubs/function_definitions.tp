@@ -1,4 +1,5 @@
 # functions
+
 fun func.
 fun func @a.
 fun func @a @b
@@ -9,4 +10,3 @@ fun func
   @b
 ->
   return add(@a, @b)
-.
