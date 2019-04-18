@@ -1,0 +1,36 @@
+# Function declarations
+
+fun main ->.
+
+fun main @a @b ->.
+
+fun main
+    @a
+    @b
+->.
+
+# Function definitions
+
+fun main -> return 1.
+
+fun main ->
+    return 1
+.
+
+fun main @a @b -> return 1.
+
+fun main @a @b ->
+    return 1
+.
+
+fun main
+    @a
+    @b
+-> return 1.
+
+fun main
+    @a
+    @b
+->
+    return 1
+.
