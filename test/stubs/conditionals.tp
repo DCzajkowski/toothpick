@@ -1,13 +1,14 @@
-# if statements
-
-if call(@a, @b) -> return 1.
-
+# ifs
 if @cond -> return 1.
-
-if call(@a, @b)
+if @cond
+  return 1.
+if @cond ->
+  return 1.
+if @cond
   return 1
 .
-
-if @cond
+if
+  @cond
+->
   return 1
 .
