@@ -9,7 +9,7 @@ defmodule Toothpick.Parser do
   # Parses the function definition. A function always starts with a keyword 'fun' and identifier.
   # It is then followed by an optional list of arguments and body.
   defp function(tree, [{:keyword, "fun"}, {:identifier, name} | tail]) do
-    children = [{:keyword, "fun"}, {:identifier, name}]
+    children = [{:identifier, name}]
 
     {children, tail} = function_arguments(children, tail)
     {children, tail} = body(children, tail)
@@ -31,20 +31,21 @@ defmodule Toothpick.Parser do
   # There are two types of statements. :return_statement and :if_statement. In both cases,
   # they are terminated by a {:punctuator, '.'}.
   defp statement(tree, [{:keyword, "return"} | tail]) do
-    children = [{:keyword, "return"}]
+    {child, tail} = expression([], tail)
 
-    {children, tail} = expression(children, tail)
-
-    statement(tree ++ [{:return_statement, children}], tail)
+    statement(tree ++ [{:return_statement, child}], tail)
   end
 
   defp statement(tree, [{:keyword, "if"} | tail]) do
-    children = [{:keyword, "if"}]
-
-    {children, tail} = logical_expression(children, tail)
+    {children, tail} = logical_expression([], tail)
     {children, tail} = body(children, tail)
 
     statement(tree ++ [{:if_statement, children}], tail)
+  end
+
+  defp statement(tree, [{:indentifier, value} | tail]) do
+    {child, tail} = expression([], [{:indentifier, value} | tail])
+    statement(tree ++ [{:expression_statement, child}], tail)
   end
 
   defp statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
@@ -55,7 +56,27 @@ defmodule Toothpick.Parser do
 
   # An expression is a simplest, smallest chunk of the code. It is normally a :string,
   # :variable or :integer.
-  defp expression(tree, [{:string, value} | tail]), do: {tree ++ [{:expression, [{:string, value}]}], tail}
-  defp expression(tree, [{:variable, value} | tail]), do: {tree ++ [{:expression, [{:variable, value}]}], tail}
-  defp expression(tree, [{:integer, value} | tail]), do: {tree ++ [{:expression, [{:integer, value}]}], tail}
+
+  defp expression([], [anything, {:punctuator, "("} | tail]) do
+    function_call(anything,[{:punctuator, "("} | tail])
+  end
+  defp expression([], [{:string, value} | tail]), do: {{:string, value}, tail}
+  defp expression([], [{:variable, value} | tail]), do: {{:variable, value}, tail}
+  defp expression([], [{:integer, value} | tail]), do: {{:integer, value}, tail}
+  defp expression([], tail), do: {nil, tail}
+
+  defp function_call(tree, [{:punctuator, "("} | tail]) do
+    {args, tail} = arguments([], tail)
+    function = [{:function_call, [{:calle, tree}, {:args, args}]}]
+    function_call(function, tail)
+  end
+  defp function_call(tree, tail), do: {tree, tail}
+
+
+  defp arguments(args, [{:punctuator, ")"} | tail]), do: {args, tail}
+  defp arguments(args, [{:punctuator, ","} | tail]), do: arguments(args, tail)
+  defp arguments(args, anything) do
+    {argument, tail} = expression([], anything)
+    arguments(args++[argument], tail)
+  end
 end
