@@ -32,9 +32,6 @@ defmodule ParserTest do
     )
   end
 
-
-
-
   test "correctly parses function with arguments" do
     assert(
       parse(

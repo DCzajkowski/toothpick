@@ -6,27 +6,32 @@ defmodule FunctionArgumentsTest do
 
   # fun main ->.
   test "correctly parses no arguments" do
-    tokens = [ punctuator: "->" ]
+    tokens = [punctuator: "->"]
     {children, tail} = function_arguments([], tokens)
     assert(children == [function_arguments: []])
     assert(tail == tokens)
   end
 
-  #fun main @a @b ->.
+  # fun main @a @b ->.
   test "correctly parses single-line arguments" do
     tokens = [
       variable: "a",
       variable: "b",
-      punctuator: "->",
+      punctuator: "->"
     ]
+
     {children, tail} = function_arguments([], tokens)
-    assert(children == [
-      function_arguments: [
-        variable: "a",
-        variable: "b"
+
+    assert(
+      children == [
+        function_arguments: [
+          variable: "a",
+          variable: "b"
+        ]
       ]
-    ])
-    assert(tail == [ punctuator: "->" ])
+    )
+
+    assert(tail == [punctuator: "->"])
   end
 
   # fun main
@@ -36,20 +41,25 @@ defmodule FunctionArgumentsTest do
   test "correctly parses multi-line arguments" do
     tokens = [
       new_line: "\n",
-        variable: "a",
-        new_line: "\n",
-        variable: "b",
-        new_line: "\n",
-        punctuator: "->",
+      variable: "a",
+      new_line: "\n",
+      variable: "b",
+      new_line: "\n",
+      punctuator: "->"
     ]
+
     {children, tail} = function_arguments([], tokens)
-    assert(children == [
-      function_arguments: [
-        variable: "a",
-        variable: "b"
+
+    assert(
+      children == [
+        function_arguments: [
+          variable: "a",
+          variable: "b"
+        ]
       ]
-    ])
-    assert(tail == [ punctuator: "->" ])
+    )
+
+    assert(tail == [punctuator: "->"])
   end
 
   # fun main @a
@@ -58,10 +68,10 @@ defmodule FunctionArgumentsTest do
     tokens = [
       variable: "a",
       new_line: "\n",
-      punctuator: "->",
+      punctuator: "->"
     ]
 
-     assert_raise(
+    assert_raise(
       RuntimeError,
       fn -> function_arguments([], tokens) end
     )
@@ -76,10 +86,10 @@ defmodule FunctionArgumentsTest do
       variable: "a",
       variable: "b",
       new_line: "\n",
-      punctuator: "->",
+      punctuator: "->"
     ]
 
-     assert_raise(
+    assert_raise(
       RuntimeError,
       fn -> function_arguments([], tokens) end
     )
@@ -90,10 +100,10 @@ defmodule FunctionArgumentsTest do
   test "throws error when parsing empty arguments with newline" do
     tokens = [
       new_line: "\n",
-      punctuator: "->",
+      punctuator: "->"
     ]
 
-     assert_raise(
+    assert_raise(
       RuntimeError,
       fn -> function_arguments([], tokens) end
     )
