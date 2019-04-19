@@ -10,7 +10,7 @@ matrix:
 script:
   - mix format --check-formatted
   - mix dialyzer --halt-exit-status
-  - mix test
+  - mix test --trace
 
 cache:
   directories:
