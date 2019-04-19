@@ -11,11 +11,11 @@ defmodule Toothpick.Parser.FunctionArguments do
     {tree ++ [{:function_arguments, children}], tail}
   end
 
-  # decide if arguments have newlines
+  # Decides if arguments have newlines.
   defp arguments_are_horizontal([{:new_line, _} | _]), do: false
   defp arguments_are_horizontal(_), do: true
 
-  # process arguments without newlines
+  # Process arguments without newlines.
   defp horizontal_args(args, [{:variable, name} | tail]), do: horizontal_args(args ++ [{:variable, name}], tail)
 
   defp horizontal_args(_, [{:new_line, _} | _]),
@@ -23,7 +23,7 @@ defmodule Toothpick.Parser.FunctionArguments do
 
   defp horizontal_args(args, tail), do: {args, tail}
 
-  # process arguments with newlines
+  # Process arguments with newlines.
   defp vertical_args(args, [{:new_line, _}, {:variable, name} | tail]),
     do: vertical_args(args ++ [{:variable, name}], tail)
 
