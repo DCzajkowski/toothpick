@@ -48,7 +48,7 @@ defmodule Toothpick.Parser do
   end
 
   defp statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
-  defp statement(tree, [{:punctuator, "."} | tail]), do: {tree, tail}
+  defp statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
 
   defp logical_expression(tree, [{:variable, variable} | tail]),
     do: {tree ++ [{:logical_expression, [{:variable, variable}]}], tail}
