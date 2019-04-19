@@ -18,14 +18,10 @@ defmodule ParserTest do
         new_line: "\n"
       ) == [
         function_declaration: [
-          keyword: "fun",
           identifier: "main",
           function_arguments: [],
           function_body: [
-            return_statement: [
-              keyword: "return",
-              expression: [string: "Hello, World!"]
-            ]
+            return_statement: {:string, "Hello, World!"}
           ]
         ]
       ]
@@ -48,11 +44,10 @@ defmodule ParserTest do
         new_line: "\n"
       ) == [
         function_declaration: [
-          keyword: "fun",
           identifier: "add",
           function_arguments: [variable: "a", variable: "b"],
           function_body: [
-            return_statement: [keyword: "return", expression: [variable: "a"]]
+            return_statement: {:variable, "a"}
           ]
         ]
       ]
@@ -83,18 +78,72 @@ defmodule ParserTest do
         new_line: "\n"
       ) == [
         function_declaration: [
-          keyword: "fun",
           identifier: "abcd",
           function_arguments: [variable: "n"],
           function_body: [
             if_statement: [
-              keyword: "if",
               logical_expression: [variable: "n"],
               function_body: [
-                return_statement: [keyword: "return", expression: [integer: "1"]]
+                return_statement: {:integer, "1"}
               ]
             ],
-            return_statement: [keyword: "return", expression: [integer: "2"]]
+            return_statement: {:integer, "2"}
+          ]
+        ]
+      ]
+    )
+  end
+
+  test "correctly parses complicated function call" do
+    assert(
+      parse(
+        keyword: "fun",
+        identifier: "add",
+        variable: "a",
+        variable: "b",
+        punctuator: "->",
+        new_line: "\n",
+        keyword: "return",
+        variable: "a",
+        punctuator: "(",
+        identifier: "stop",
+        punctuator: "(",
+        punctuator: ")",
+        punctuator: ",",
+        variable: "b",
+        punctuator: ")",
+        punctuator: "(",
+        punctuator: ")",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        function_declaration: [
+          identifier: "add",
+          function_arguments: [
+            variable: "a",
+            variable: "b"
+          ],
+          function_body: [
+            return_statement: {
+              :function_call,
+              [
+                calle: {
+                  :function_call,
+                  [
+                    calle: {:variable, "a"},
+                    args: [
+                      function_call: [
+                        calle: {:identifier, "stop"},
+                        args: []
+                      ],
+                      variable: "b"
+                    ]
+                  ]
+                },
+                args: []
+              ]
+            }
           ]
         ]
       ]
