@@ -8,8 +8,6 @@ matrix:
       elixir: 1.8.1
 
 script:
-  - mix deps.get
-  - mix deps.compile
   - mix format --check-formatted
   - mix dialyzer --halt-exit-status
   - mix test
