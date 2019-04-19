@@ -93,4 +93,60 @@ defmodule ParserTest do
       ]
     )
   end
+
+  test "correctly parses complicated function call" do
+    assert(
+      parse(
+        keyword: "fun",
+        identifier: "add",
+        variable: "a",
+        variable: "b",
+        punctuator: "->",
+        new_line: "\n",
+        keyword: "return",
+        variable: "a",
+        punctuator: "(",
+        indentifier: "stop",
+        punctuator: "(",
+        punctuator: ")",
+        punctuator: ",",
+        variable: "b",
+        punctuator: ")",
+        punctuator: "(",
+        punctuator: ")",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        function_declaration: [
+          identifier: "add",
+          function_arguments: [
+            variable: "a",
+            variable: "b"
+          ],
+          function_body: [
+            return_statement: {
+              :function_call,
+              [
+                calle: {
+                  :function_call,
+                  [
+                    calle: {:variable, "a"},
+                    args: [
+                      function_call: [
+                        calle: {:indentifier, "stop"},
+                        args: []
+                      ],
+                      variable: "b"
+                    ]
+                  ]
+                },
+                args: []
+              ]
+            }
+          ]
+        ]
+      ]
+    )
+  end
 end
