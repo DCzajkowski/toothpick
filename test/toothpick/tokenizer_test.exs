@@ -1,4 +1,4 @@
-defmodule ToothpickTokenizerTest do
+defmodule TokenizerTest do
   import Toothpick.Tokenizer, only: [tokens: 1]
   use ExUnit.Case
 
@@ -52,9 +52,6 @@ defmodule ToothpickTokenizerTest do
   test "correctly tokenizes function with multiline arguments" do
     assert(
       tokens(stub("function_with_multiline_arguments")) == [
-        new_line: "\n",
-        line_comment: "this is comment",
-        new_line: "\n",
         keyword: "fun",
         identifier: "func",
         new_line: "\n",

@@ -1,4 +1,6 @@
 defmodule Toothpick.Parser do
+  import Toothpick.Parser.FunctionArguments, only: [function_arguments: 2]
+
   def parse(tokens), do: program(tokens)
 
   # Parses the very top level of a program. A program can consist only of function declarations.
@@ -9,7 +11,7 @@ defmodule Toothpick.Parser do
   defp function(tree, [{:keyword, "fun"}, {:identifier, name} | tail]) do
     children = [{:keyword, "fun"}, {:identifier, name}]
 
-    {children, tail} = arguments(children, tail)
+    {children, tail} = function_arguments(children, tail)
     {children, tail} = body(children, tail)
 
     function(tree ++ [{:function_declaration, children}], tail)
@@ -17,30 +19,14 @@ defmodule Toothpick.Parser do
 
   defp function(tree, tail), do: {tree, tail}
 
-  # Arguments of a function is a list of variables. It ends, if any other token than a variable
-  # is encountered (normally a {:new_line, _} or {:punctuator, '->'}).
-  defp arguments(tree, [{:variable, name} | tail]) do
-    children = [{:variable, name}]
-
-    {children, tail} = accumulate_args(children, tail)
-
-    {tree ++ [{:function_arguments, children}], tail}
-  end
-
-  defp arguments(tree, tail), do: {tree, tail}
-  defp accumulate_args(args, [{:variable, name} | tail]), do: accumulate_args(args ++ [{:variable, name}], tail)
-  defp accumulate_args(args, tail), do: {args, tail}
-
-  # Function's body always starts with a {:new_line, _} and is terminated by a {:punctuator, '.'}.
-  defp body(tree, [{:new_line, _} | tail]) do
-    children = []
-
-    {children, tail} = statement(children, tail)
+  # Function's body always starts with a {:punctuator, '->'} and is terminated by a {:punctuator, '.'}.
+  defp body(tree, [{:punctuator, "->"} | tail]) do
+    {children, tail} = statement([], tail)
 
     {tree ++ [{:function_body, children}], tail}
   end
 
-  defp body(tree, [{:punctuator, "."} | tail]), do: {tree ++ [{:function_body, []}], tail}
+  defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree ++ [{:function_body, []}], tail}
 
   # There are two types of statements. :return_statement and :if_statement. In both cases,
   # they are terminated by a {:punctuator, '.'}.
@@ -62,7 +48,7 @@ defmodule Toothpick.Parser do
   end
 
   defp statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
-  defp statement(tree, [{:punctuator, "."} | tail]), do: {tree, tail}
+  defp statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
 
   defp logical_expression(tree, [{:variable, variable} | tail]),
     do: {tree ++ [{:logical_expression, [{:variable, variable}]}], tail}

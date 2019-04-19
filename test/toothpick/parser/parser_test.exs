@@ -1,4 +1,4 @@
-defmodule ToothpickParserTest do
+defmodule ParserTest do
   import Toothpick.Parser, only: [parse: 1]
   use ExUnit.Case
 
@@ -9,6 +9,7 @@ defmodule ToothpickParserTest do
       parse(
         keyword: "fun",
         identifier: "main",
+        punctuator: "->",
         new_line: "\n",
         keyword: "return",
         string: "Hello, World!",
@@ -19,45 +20,13 @@ defmodule ToothpickParserTest do
         function_declaration: [
           keyword: "fun",
           identifier: "main",
+          function_arguments: [],
           function_body: [
             return_statement: [
               keyword: "return",
               expression: [string: "Hello, World!"]
             ]
           ]
-        ]
-      ]
-    )
-  end
-
-  test "correctly parses function without arguments and shortened body" do
-    assert(
-      parse(
-        keyword: "fun",
-        identifier: "main",
-        punctuator: "."
-      ) == [
-        function_declaration: [
-          keyword: "fun",
-          identifier: "main",
-          function_body: []
-        ]
-      ]
-    )
-  end
-
-  test "correctly parses function without arguments and body" do
-    assert(
-      parse(
-        keyword: "fun",
-        identifier: "main",
-        new_line: "\n",
-        punctuator: "."
-      ) == [
-        function_declaration: [
-          keyword: "fun",
-          identifier: "main",
-          function_body: []
         ]
       ]
     )
@@ -70,6 +39,7 @@ defmodule ToothpickParserTest do
         identifier: "add",
         variable: "a",
         variable: "b",
+        punctuator: "->",
         new_line: "\n",
         keyword: "return",
         variable: "a",
@@ -95,9 +65,11 @@ defmodule ToothpickParserTest do
         keyword: "fun",
         identifier: "abcd",
         variable: "n",
+        punctuator: "->",
         new_line: "\n",
         keyword: "if",
         variable: "n",
+        punctuator: "->",
         new_line: "\n",
         keyword: "return",
         integer: "1",
