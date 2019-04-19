@@ -106,7 +106,7 @@ defmodule ParserTest do
         keyword: "return",
         variable: "a",
         punctuator: "(",
-        indentifier: "stop",
+        identifier: "stop",
         punctuator: "(",
         punctuator: ")",
         punctuator: ",",
@@ -134,7 +134,7 @@ defmodule ParserTest do
                     calle: {:variable, "a"},
                     args: [
                       function_call: [
-                        calle: {:indentifier, "stop"},
+                        calle: {:identifier, "stop"},
                         args: []
                       ],
                       variable: "b"

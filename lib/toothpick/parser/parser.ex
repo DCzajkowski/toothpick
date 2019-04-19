@@ -29,7 +29,6 @@ defmodule Toothpick.Parser do
 
   defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree ++ [{:function_body, []}], tail}
 
-
   defp statement(tree, [{:keyword, "return"} | tail]) do
     {child, tail} = expression(tail)
 
@@ -43,8 +42,8 @@ defmodule Toothpick.Parser do
     statement(tree ++ [{:if_statement, children}], tail)
   end
 
-  defp statement(tree, [{:indentifier, value} | tail]) do
-    {child, tail} = expression([{:indentifier, value} | tail])
+  defp statement(tree, [{:identifier, value} | tail]) do
+    {child, tail} = expression([{:identifier, value} | tail])
     statement(tree ++ [{:expression_statement, child}], tail)
   end
 
