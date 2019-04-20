@@ -10,6 +10,15 @@ defmodule TokenizerTest do
     |> File.read!()
   end
 
+  test "correctly tokenizes booleans" do
+    assert(
+      tokens("true false") == [
+        boolean: "true",
+        boolean: "false"
+      ]
+    )
+  end
+
   test "correctly tokenizes function without arguments" do
     assert(
       tokens(stub("function_without_arguments")) == [

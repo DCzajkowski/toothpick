@@ -8,6 +8,7 @@ defmodule Toothpick.Tokenizer do
 
   tokens(:new_line, :new_line_chars)
   tokens(:punctuator, :punctuators)
+  tokens(:boolean, :booleans)
 
   def tokens(any) do
     cond do
