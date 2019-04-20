@@ -10,6 +10,7 @@ defmodule Toothpick.Parser.Expression do
   def expression([{:string, value} | tail]), do: {{:string, value}, tail}
   def expression([{:variable, value} | tail]), do: {{:variable, value}, tail}
   def expression([{:integer, value} | tail]), do: {{:integer, value}, tail}
+  def expression([{:boolean, value} | tail]), do: {{:boolean, value}, tail}
   def expression(tail), do: {nil, tail}
 
   defp function_call(tree, [{:punctuator, "("} | tail]) do

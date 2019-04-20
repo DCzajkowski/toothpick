@@ -4,6 +4,30 @@ defmodule FunctionExpressionTest do
 
   doctest Toothpick.Parser.Expression
 
+  test "corectly parses integer" do
+    {tree, _} = expression(integer: 1)
+
+    assert(tree == {:integer, 1})
+  end
+
+  test "corectly parses variable" do
+    {tree, _} = expression(variable: "a")
+
+    assert(tree == {:variable, "a"})
+  end
+
+  test "corectly parses string" do
+    {tree, _} = expression(string: "text")
+
+    assert(tree == {:string, "text"})
+  end
+
+  test "corectly parses boolean" do
+    {tree, _} = expression(boolean: "true")
+
+    assert(tree == {:boolean, "true"})
+  end
+
   test "correctly parses function call with variable as callee" do
     tokens = [
       variable: "a",
@@ -141,6 +165,28 @@ defmodule FunctionExpressionTest do
     )
   end
 
+  test "correctly parses function call with boolean as argument" do
+    tokens = [
+      variable: "a",
+      punctuator: "(",
+      boolean: "true",
+      punctuator: ")"
+    ]
+
+    {tree, _} = expression(tokens)
+
+    assert(
+      tree ==
+        {
+          :function_call,
+          [
+            calle: {:variable, "a"},
+            args: [boolean: "true"]
+          ]
+        }
+    )
+  end
+
   test "correctly parses function call with function call as argument" do
     tokens = [
       variable: "a",
@@ -164,6 +210,33 @@ defmodule FunctionExpressionTest do
                 calle: {:variable, "b"},
                 args: []
               ]
+            ]
+          ]
+        }
+    )
+  end
+
+  test "correctly parses function call with function multiple arguments" do
+    tokens = [
+      variable: "a",
+      punctuator: "(",
+      variable: "b",
+      punctuator: ",",
+      variable: "c",
+      punctuator: ")"
+    ]
+
+    {tree, _} = expression(tokens)
+
+    assert(
+      tree ==
+        {
+          :function_call,
+          [
+            calle: {:variable, "a"},
+            args: [
+              variable: "b",
+              variable: "c"
             ]
           ]
         }
