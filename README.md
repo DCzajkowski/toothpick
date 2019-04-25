@@ -14,11 +14,11 @@ cd toothpick
 ### Compiling and running the application
 
 ```bash
-mix tokenize path/to/source/file.tp # To get tokens list
-mix parse path/to/source/file.tp # To get toothpick-AST
-# WIP # mix compile path/to/source/file.tp # To get JavaScript-AST
-# WIP # mix js path/to/source/file.tp # To get JavaScript code
-# WIP # mix run path/to/source/file.tp # To get output of the program embedded in the file.tp file (runs the JavaScript compiler and runs the program with Node.JS)
+mix tokenize test/stubs/function_without_arguments.tp `# returns the tokens list` \
+| mix parse `# parses the tokens list and returns the Toothpick AST` \
+| mix translate `# translates the Toothpick AST to JS AST` \
+| node node_modules/js-ast-compiler/compile.js `# compiles the JS AST to JS code` \
+| node `# runs the code`
 ```
 
 ### Running tests
