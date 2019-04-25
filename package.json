@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "js-ast-compiler": "^1.0.0"
+  }
+}
