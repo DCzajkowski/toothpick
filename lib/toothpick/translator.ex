@@ -2,7 +2,18 @@ defmodule Toothpick.Translator do
   def translate(tree) do
     %{
       "type" => "Program",
-      "body" => program_body([], tree)
+      "body" =>
+        program_body([], tree) ++
+          [
+            %{
+              "expression" => %{
+                "arguments" => [],
+                "callee" => %{"name" => "main", "type" => "Identifier"},
+                "type" => "CallExpression"
+              },
+              "type" => "ExpressionStatement"
+            }
+          ]
     }
   end
 

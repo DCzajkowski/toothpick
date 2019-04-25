@@ -29,6 +29,14 @@ defmodule TranslatorTest do
             "id" => %{"name" => "main", "type" => "Identifier"},
             "params" => [],
             "type" => "FunctionDeclaration"
+          },
+          %{
+            "expression" => %{
+              "arguments" => [],
+              "callee" => %{"name" => "main", "type" => "Identifier"},
+              "type" => "CallExpression"
+            },
+            "type" => "ExpressionStatement"
           }
         ],
         "type" => "Program"
