@@ -3,8 +3,8 @@ fun func
   @second
   @third
 ->
-  if eq(@second, 1)
-    return 2
+  if
+    eq(@second, 1) : return 2
   .
 
   return add(@first, @third)
