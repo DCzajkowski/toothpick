@@ -50,11 +50,6 @@ defmodule Toothpick.Parser do
     )
   end
 
-  # def statement(tree, [{:identifier, value} | tail]) do
-  #   {child, tail} = expression([{:identifier, value} | tail])
-  #   statement(tree ++ [{:expression_statement, child}], tail)
-  # end
-
   def statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
   def statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
   def statement(tree, tail), do: {tree, tail}
