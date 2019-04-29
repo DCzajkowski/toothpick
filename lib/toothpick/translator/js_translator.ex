@@ -7,18 +7,11 @@ defmodule Toothpick.Translator.JsTranslator do
   end
 
   def preamble() do
-    "/* [standard library is normally included here] */\n"
+    File.read!("lib/assets/preamble.js") <> "\n"
   end
 
   def ending() do
-    """
-    const statusOrPrintable = main();
-    if (statusOrPrintable === 0 || statusOrPrintable === 1) {
-      process.exit(statusOrPrintable);
-    } else {
-      console.log(statusOrPrintable);
-    }
-    """
+    File.read!("lib/assets/ending.js")
   end
 
   def program_body(tree, [{:function_declaration, function_declaration} | tail]),
