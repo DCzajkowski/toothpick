@@ -35,7 +35,7 @@ defmodule Toothpick.Parser do
     statement(tree ++ [{:return_statement, child}], tail)
   end
 
-  def statement(tree, [{:keyword, "if"}, {:new_line, _}, {:punctuator, "."} | _tail]), do: {tree, []}
+  def statement(tree, [{:keyword, "if"}, {:new_line, _}, {:punctuator, "."} | tail]), do: {tree, tail}
 
   def statement(tree, [{:keyword, "if"}, {:new_line, _} | tail]) do
     {condition, tail} = condition(tail)
