@@ -123,13 +123,16 @@ defmodule ParserTest do
         new_line: "\n",
         punctuator: ".",
         new_line: "\n"
-      ) == [
-        if_statement: [
-          condition: {:variable, "a"},
-          yes: {:return_statement, {:integer, "1"}},
-          no: []
-        ]
-      ]
+      ) == {
+        [
+          if_statement: [
+            condition: {:variable, "a"},
+            yes: {:return_statement, {:integer, "1"}},
+            no: []
+          ]
+        ],
+        []
+      }
     )
   end
 
@@ -161,21 +164,58 @@ defmodule ParserTest do
         new_line: "\n",
         punctuator: ".",
         new_line: "\n"
-      ) == [
-        if_statement: [
-          condition: {:variable, "a"},
-          yes: {:return_statement, {:integer, "1"}},
-          no: [
-            if_statement: [
-              condition: {:function_call, [calle: "cond", args: [{:variable, "a"}, {:integer, "4"}]]},
-              yes: {:return_statement, {:integer, "2"}},
-              no: [
-                if_statement: [
-                  condition: {:boolean, "true"},
-                  yes: {:return_statement, {:integer, "3"}},
-                  no: []
+      ) == {
+        [
+          if_statement: [
+            condition: {:variable, "a"},
+            yes: {:return_statement, {:integer, "1"}},
+            no: [
+              if_statement: [
+                condition: {:function_call, [calle: "cond", args: [{:variable, "a"}, {:integer, "4"}]]},
+                yes: {:return_statement, {:integer, "2"}},
+                no: [
+                  if_statement: [
+                    condition: {:boolean, "true"},
+                    yes: {:return_statement, {:integer, "3"}},
+                    no: []
+                  ]
                 ]
               ]
+            ]
+          ]
+        ],
+        []
+      }
+    )
+  end
+
+  test "correctly parses if statement in function" do
+    assert(
+      parse(
+        keyword: "fun",
+        identifier: "main",
+        punctuator: "->",
+        new_line: "\n",
+        keyword: "if",
+        new_line: "\n",
+        variable: "cond",
+        punctuator: ":",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        function_declaration: [
+          identifier: "main",
+          function_arguments: [],
+          function_body: [
+            if_statement: [
+              condition: {:variable, "cond"},
+              yes: {:return_statement, {:integer, "1"}},
+              no: []
             ]
           ]
         ]
