@@ -1,8 +1,8 @@
-defmodule TranslatorTest do
-  import Toothpick.Translator, only: [translate: 1]
+defmodule JsTranslatorTest do
+  import Toothpick.Translator.JsTranslator, only: [translate: 1]
   use ExUnit.Case
 
-  doctest Toothpick.Translator
+  doctest Toothpick.Translator.JsTranslator
 
   test "it correctly translates a function with no arguments" do
     assert(
@@ -29,14 +29,6 @@ defmodule TranslatorTest do
             "id" => %{"name" => "main", "type" => "Identifier"},
             "params" => [],
             "type" => "FunctionDeclaration"
-          },
-          %{
-            "expression" => %{
-              "arguments" => [],
-              "callee" => %{"name" => "main", "type" => "Identifier"},
-              "type" => "CallExpression"
-            },
-            "type" => "ExpressionStatement"
           }
         ],
         "type" => "Program"
