@@ -56,7 +56,8 @@ defmodule Toothpick.Tokenizer do
 
   defp try_matching_line_comment(any) do
     case Regex.run(~r/\A#[\s]*([^\n]*)\n(.*)\Z/s, any) do
-      [_, comment, tail] -> [{:line_comment, comment}] ++ tokens(tail)
+      # ignore comment lines
+      [_, _, tail] -> tokens(tail)
       _ -> :not_matched
     end
   end
