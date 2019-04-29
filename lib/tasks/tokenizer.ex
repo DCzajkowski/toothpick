@@ -42,6 +42,6 @@ defmodule Mix.Tasks.Tokenize do
     argv
     |> Tasks.Helpers.ContentReader.get_content()
     |> Toothpick.Tokenizer.tokens()
-    |> IO.inspect(pretty: true)
+    |> IO.inspect(pretty: true, limit: :infinity)
   end
 end
