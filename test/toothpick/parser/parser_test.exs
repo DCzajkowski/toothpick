@@ -222,4 +222,143 @@ defmodule ParserTest do
       ]
     )
   end
+
+  test "correctly parses an advanced function with multiple if statements and multiple cases" do
+    assert(
+      parse(
+        keyword: "fun",
+        identifier: "main",
+        punctuator: "->",
+        new_line: "\n",
+        keyword: "if",
+        new_line: "\n",
+        variable: "cond",
+        punctuator: ":",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n",
+        keyword: "if",
+        new_line: "\n",
+        identifier: "lte",
+        punctuator: "(",
+        variable: "num",
+        punctuator: ",",
+        integer: "1",
+        punctuator: ")",
+        punctuator: ":",
+        keyword: "return",
+        identifier: "format",
+        punctuator: "(",
+        string: "$ is not a prime number",
+        punctuator: ",",
+        variable: "num",
+        punctuator: ")",
+        new_line: "\n",
+        identifier: "contains",
+        punctuator: "(",
+        identifier: "range",
+        punctuator: "(",
+        integer: "2",
+        punctuator: ",",
+        variable: "num",
+        punctuator: ")",
+        punctuator: ",",
+        boolean: "true",
+        punctuator: ")",
+        punctuator: ":",
+        keyword: "return",
+        identifier: "format",
+        punctuator: "(",
+        string: "$ is not a prime number",
+        punctuator: ",",
+        variable: "num",
+        punctuator: ")",
+        new_line: "\n",
+        boolean: "true",
+        punctuator: ":",
+        keyword: "return",
+        identifier: "format",
+        punctuator: "(",
+        string: "$ is a prime number",
+        punctuator: ",",
+        variable: "num",
+        punctuator: ")",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        function_declaration: [
+          identifier: "main",
+          function_arguments: [],
+          function_body: [
+            if_statement: [
+              condition: {:variable, "cond"},
+              yes: {:return_statement, {:integer, "1"}},
+              no: []
+            ],
+            if_statement: [
+              condition: {:function_call, [calle: "lte", args: [variable: "num", integer: "1"]]},
+              yes: {
+                :return_statement,
+                {
+                  :function_call,
+                  [
+                    calle: {:identifier, "format"},
+                    args: [string: "$ is not a prime number", variable: "num"]
+                  ]
+                }
+              },
+              no: [
+                if_statement: [
+                  condition: {
+                    :function_call,
+                    [
+                      calle: "contains",
+                      args: [
+                        function_call: [
+                          calle: {:identifier, "range"},
+                          args: [integer: "2", variable: "num"]
+                        ],
+                        boolean: "true"
+                      ]
+                    ]
+                  },
+                  yes: {
+                    :return_statement,
+                    {
+                      :function_call,
+                      [
+                        calle: {:identifier, "format"},
+                        args: [string: "$ is not a prime number", variable: "num"]
+                      ]
+                    }
+                  },
+                  no: [
+                    if_statement: [
+                      condition: {:boolean, "true"},
+                      yes: {
+                        :return_statement,
+                        {
+                          :function_call,
+                          [
+                            calle: {:identifier, "format"},
+                            args: [string: "$ is a prime number", variable: "num"]
+                          ]
+                        }
+                      },
+                      no: []
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    )
+  end
 end
