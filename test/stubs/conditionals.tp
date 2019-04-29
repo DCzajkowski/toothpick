@@ -2,10 +2,10 @@ fun main ->
   if
     @cond : return 1
   .
-  # if @cond2 : return 1.
-  # if
-  #   lte(@num, 1) : print('$ is not a prime number', @num)
-  #   contains(range(2, @num), true) : print('$ is not a prime number', @num)
-  #   true : print('$ is a prime number', @num)
-  # .
+
+  if
+    lte(@num, 1) : return format('$ is not a prime number', @num)
+    contains(range(2, @num), true) : return format('$ is not a prime number', @num)
+    true : return format('$ is a prime number', @num)
+  .
 .
