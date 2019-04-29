@@ -1,5 +1,5 @@
 defmodule ParserTest do
-  import Toothpick.Parser, only: [parse: 1]
+  import Toothpick.Parser, only: [parse: 1, statement: 2]
   use ExUnit.Case
 
   doctest Toothpick.Parser
@@ -48,46 +48,6 @@ defmodule ParserTest do
           function_arguments: [variable: "a", variable: "b"],
           function_body: [
             return_statement: {:variable, "a"}
-          ]
-        ]
-      ]
-    )
-  end
-
-  test "correctly parses function with boolean if statement" do
-    assert(
-      parse(
-        keyword: "fun",
-        identifier: "abcd",
-        variable: "n",
-        punctuator: "->",
-        new_line: "\n",
-        keyword: "if",
-        variable: "n",
-        punctuator: "->",
-        new_line: "\n",
-        keyword: "return",
-        integer: "1",
-        new_line: "\n",
-        punctuator: ".",
-        new_line: "\n",
-        keyword: "return",
-        integer: "2",
-        new_line: "\n",
-        punctuator: ".",
-        new_line: "\n"
-      ) == [
-        function_declaration: [
-          identifier: "abcd",
-          function_arguments: [variable: "n"],
-          function_body: [
-            if_statement: [
-              logical_expression: [variable: "n"],
-              function_body: [
-                return_statement: {:integer, "1"}
-              ]
-            ],
-            return_statement: {:integer, "2"}
           ]
         ]
       ]
@@ -144,6 +104,79 @@ defmodule ParserTest do
                 args: []
               ]
             }
+          ]
+        ]
+      ]
+    )
+  end
+
+  test "correctly parses if statement with no else clauses" do
+    assert(
+      statement(
+        [],
+        keyword: "if",
+        new_line: "\n",
+        variable: "a",
+        punctuator: ":",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        if_statement: [
+          condition: {:variable, "a"},
+          yes: {:return_statement, {:integer, "1"}},
+          no: []
+        ]
+      ]
+    )
+  end
+
+  test "correctly parses if statement with else clauses" do
+    assert(
+      statement(
+        [],
+        keyword: "if",
+        new_line: "\n",
+        variable: "a",
+        punctuator: ":",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        identifier: "cond",
+        punctuator: "(",
+        variable: "a",
+        punctuator: ",",
+        integer: "4",
+        punctuator: ")",
+        punctuator: ":",
+        keyword: "return",
+        integer: "2",
+        new_line: "\n",
+        boolean: "true",
+        punctuator: ":",
+        keyword: "return",
+        integer: "3",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ) == [
+        if_statement: [
+          condition: {:variable, "a"},
+          yes: {:return_statement, {:integer, "1"}},
+          no: [
+            if_statement: [
+              condition: {:function_call, [calle: "cond", args: [{:variable, "a"}, {:integer, "4"}]]},
+              yes: {:return_statement, {:integer, "2"}},
+              no: [
+                if_statement: [
+                  condition: {:boolean, "true"},
+                  yes: {:return_statement, {:integer, "3"}},
+                  no: []
+                ]
+              ]
+            ]
           ]
         ]
       ]

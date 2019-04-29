@@ -41,10 +41,9 @@ defmodule TokenizerTest do
         identifier: "add",
         variable: "a",
         variable: "b",
+        punctuator: "->",
         new_line: "\n",
         keyword: "return",
-        identifier: "Math",
-        punctuator: ".",
         identifier: "add",
         punctuator: "(",
         variable: "a",
@@ -200,6 +199,63 @@ defmodule TokenizerTest do
         punctuator: ".",
         identifier: "print",
         punctuator: ")",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ]
+    )
+  end
+
+  test "correctly tokenizes if statement with no else clauses" do
+    assert(
+      tokens("""
+      if @a :
+        return 1
+      .
+      """) == [
+        keyword: "if",
+        variable: "a",
+        punctuator: ":",
+        new_line: "\n",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        punctuator: ".",
+        new_line: "\n"
+      ]
+    )
+  end
+
+  test "correctly tokenizes if statement with else clauses" do
+    assert(
+      tokens("""
+      if
+        @a : return 1
+        cond(@a, 4) : return 2
+        true : return 3
+      .
+      """) == [
+        keyword: "if",
+        new_line: "\n",
+        variable: "a",
+        punctuator: ":",
+        keyword: "return",
+        integer: "1",
+        new_line: "\n",
+        identifier: "cond",
+        punctuator: "(",
+        variable: "a",
+        punctuator: ",",
+        integer: "4",
+        punctuator: ")",
+        punctuator: ":",
+        keyword: "return",
+        integer: "2",
+        new_line: "\n",
+        boolean: "true",
+        punctuator: ":",
+        keyword: "return",
+        integer: "3",
         new_line: "\n",
         punctuator: ".",
         new_line: "\n"
