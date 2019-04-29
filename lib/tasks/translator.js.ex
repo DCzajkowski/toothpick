@@ -1,15 +1,15 @@
-defmodule Mix.Tasks.Translate do
+defmodule Mix.Tasks.Translate.Js do
   @moduledoc """
   Translates Toothpick AST to JS AST.
 
   This task receives a Toothpick AST as input and
   outputs the JS AST in JSON:
 
-      mix translate file/containing/toothpick/ast.txt
+      mix translate.js file/containing/toothpick/ast.txt
 
   It is also possible to pass the file contents in stdin:
 
-      cat file/containing/toothpick/ast.txt | mix translate
+      cat file/containing/toothpick/ast.txt | mix translate.js
 
   ## Example
 
@@ -21,7 +21,7 @@ defmodule Mix.Tasks.Translate do
           function_arguments: [],
           function_body: [return_statement: {:string, "Hello, World!"}]
         ]
-      ]' | mix translate
+      ]' | mix translate.js
 
   ### Output
 
