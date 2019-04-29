@@ -21,28 +21,29 @@ defmodule Toothpick.Translator.JsTranslator do
     """
   end
 
-  defp program_body(tree, [{:function_declaration, function_declaration} | tail]) do
-    name = function_declaration[:identifier]
-    body = function_declaration[:function_body]
+  def program_body(tree, [{:function_declaration, function_declaration} | tail]),
+    do: program_body(tree ++ [function_declaration(function_declaration)], tail)
 
-    children = [
-      %{
-        "type" => "FunctionDeclaration",
-        "id" => %{"name" => name, "type" => "Identifier"},
-        "params" => [],
-        "body" => %{
-          "type" => "BlockStatement",
-          "body" => function_body([], body)
-        }
+  def program_body(tree, tail), do: tree ++ tail
+
+  def function_declaration(identifier: name, function_arguments: function_arguments, function_body: body) do
+    %{
+      "type" => "FunctionDeclaration",
+      "id" => %{"name" => name, "type" => "Identifier"},
+      "params" => function_arguments([], function_arguments),
+      "body" => %{
+        "type" => "BlockStatement",
+        "body" => function_body([], body)
       }
-    ]
-
-    program_body(tree ++ children, tail)
+    }
   end
 
-  defp program_body(tree, tail), do: tree ++ tail
+  def function_arguments(tree, [{:variable, variable} | tail]),
+    do: function_arguments(tree ++ [expression({:variable, variable})], tail)
 
-  defp function_body(tree, [{:return_statement, return_statement} | tail]) do
+  def function_arguments(tree, []), do: tree
+
+  def function_body(tree, [{:return_statement, return_statement} | tail]) do
     children = [
       %{
         "type" => "ReturnStatement",
@@ -53,7 +54,34 @@ defmodule Toothpick.Translator.JsTranslator do
     function_body(tree ++ children, tail)
   end
 
-  defp function_body(tree, tail), do: tree ++ tail
+  # avcd
+  def function_body(tree, tail), do: tree ++ tail
 
-  defp expression({:string, string}), do: %{"type" => "Literal", "value" => string}
+  def expression({:string, string}), do: %{"type" => "Literal", "value" => string}
+
+  def expression({:integer, integer}) do
+    {integer, ""} = Integer.parse(integer)
+    %{"type" => "Literal", "value" => integer}
+  end
+
+  def expression({:boolean, boolean}),
+    do: %{"type" => "Literal", "value" => if(boolean == "true", do: true, else: false)}
+
+  def expression({:variable, variable}), do: %{"type" => "Identifier", "name" => variable}
+
+  def expression({:function_call, function_call}) do
+    {:identifier, name} = function_call[:calle]
+
+    %{
+      "type" => "CallExpression",
+      "callee" => %{
+        "type" => "Identifier",
+        "name" => name
+      },
+      "arguments" => arguments([], function_call[:args])
+    }
+  end
+
+  def arguments(tree, [argument | tail]), do: arguments(tree ++ [expression(argument)], tail)
+  def arguments(tree, []), do: tree
 end
