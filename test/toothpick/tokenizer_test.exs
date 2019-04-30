@@ -115,7 +115,7 @@ defmodule TokenizerTest do
         punctuator: "(",
         variable: "n",
         punctuator: ",",
-        integer: "1",
+        integer: "2",
         punctuator: ")",
         punctuator: ":",
         keyword: "return",
