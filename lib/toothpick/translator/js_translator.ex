@@ -19,7 +19,11 @@ defmodule Toothpick.Translator.JsTranslator do
 
   def program_body(tree, tail), do: tree ++ tail
 
-  def function_declaration(identifier: name, function_arguments: function_arguments, function_body: body) do
+  def function_declaration(
+        identifier: name,
+        function_arguments: function_arguments,
+        function_body: body
+      ) do
     %{
       "type" => "FunctionDeclaration",
       "id" => %{"name" => name, "type" => "Identifier"},
@@ -47,7 +51,31 @@ defmodule Toothpick.Translator.JsTranslator do
     function_body(tree ++ children, tail)
   end
 
-  # avcd
+  def function_body(tree, [{:if_statement, if_statement} | tail]) do
+    function_body(
+      tree ++
+        [
+          %{
+            "type" => "IfStatement",
+            "test" => expression(if_statement[:condition]),
+            "consequent" => %{
+              "type" => "BlockStatement",
+              "body" => function_body([], [if_statement[:yes]])
+            },
+            "alternate" =>
+              if(length(if_statement[:no]) != 0,
+                do: %{
+                  "type" => "BlockStatement",
+                  "body" => function_body([], if_statement[:no])
+                },
+                else: nil
+              )
+          }
+        ],
+      tail
+    )
+  end
+
   def function_body(tree, tail), do: tree ++ tail
 
   def expression({:string, string}), do: %{"type" => "Literal", "value" => string}
