@@ -1,6 +1,6 @@
 defmodule Toothpick.Parser do
   import Toothpick.Parser.FunctionArguments, only: [function_arguments: 2]
-  import Toothpick.Parser.Expression, only: [expression: 1]
+  import Toothpick.Parser.Expression, only: [expression: 1, function_call: 2]
 
   def parse(tokens), do: program(tokens)
 
@@ -30,27 +30,48 @@ defmodule Toothpick.Parser do
 
   defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree ++ [{:function_body, []}], tail}
 
-  defp statement(tree, [{:keyword, "return"} | tail]) do
+  def statement(tree, [{:keyword, "return"} | tail]) do
     {child, tail} = expression(tail)
 
     statement(tree ++ [{:return_statement, child}], tail)
   end
 
-  defp statement(tree, [{:keyword, "if"} | tail]) do
-    {children, tail} = logical_expression([], tail)
-    {children, tail} = body(children, tail)
+  def statement(tree, [{:keyword, "if"}, {:new_line, _}, {:punctuator, "."} | tail]), do: {tree, tail}
 
-    statement(tree ++ [{:if_statement, children}], tail)
+  def statement(tree, [{:keyword, "if"}, {:new_line, _} | tail]) do
+    {condition, tail} = condition(tail)
+
+    {yes, tail} = single_statement(tail)
+
+    {no, tail} = statement([], [{:keyword, "if"}] ++ tail)
+
+    statement(
+      tree ++ [{:if_statement, [condition, {:yes, yes}, {:no, no}]}],
+      tail
+    )
   end
 
-  defp statement(tree, [{:identifier, value} | tail]) do
-    {child, tail} = expression([{:identifier, value} | tail])
-    statement(tree ++ [{:expression_statement, child}], tail)
+  def statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
+  def statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
+  def statement(tree, tail), do: {tree, tail}
+
+  defp condition([{:variable, variable}, {:punctuator, ":"} | tail]),
+    do: {{:condition, {:variable, variable}}, tail}
+
+  defp condition([{:identifier, identifier}, {:punctuator, "("} | tail]) do
+    {condition, tail} = function_call(identifier, [{:punctuator, "("}] ++ tail)
+
+    [{:punctuator, ":"} | tail] = tail
+
+    {{:condition, condition}, tail}
   end
 
-  defp statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
-  defp statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
+  defp condition([{:boolean, boolean}, {:punctuator, ":"} | tail]),
+    do: {{:condition, {:boolean, boolean}}, tail}
 
-  defp logical_expression(tree, [{:variable, variable} | tail]),
-    do: {tree ++ [{:logical_expression, [{:variable, variable}]}], tail}
+  def single_statement([{:keyword, "return"} | tail]) do
+    {child, tail} = expression(tail)
+
+    {{:return_statement, child}, tail}
+  end
 end
