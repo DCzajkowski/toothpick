@@ -4,7 +4,7 @@
 
 fun fib @n ->
   if
-    lte(@n, 1) : return 1
+    lte(@n, 2) : return 1
   .
 
   return add(fib(sub(@n, 1)), fib(sub(@n, 2)))
