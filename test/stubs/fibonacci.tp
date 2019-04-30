@@ -1,0 +1,15 @@
+# This is an example program in Toothpick. It calculates the nth fibonacci
+# number. It is not using memoization and is not optimal. It's not a point
+# of this program. It is to show the syntax and test its compilation.
+
+fun fib @n ->
+  if
+    lte(@n, 1) : return 1
+  .
+
+  return add(fib(sub(@n, 1)), fib(sub(@n, 2)))
+.
+
+fun main ->
+  return format('The $th fibonacci number is $!', 4, fib(4))
+.
