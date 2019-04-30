@@ -24,7 +24,6 @@ defmodule TokenizerTest do
       tokens(stub("function_without_arguments")) == [
         keyword: "fun",
         identifier: "main",
-        punctuator: "->",
         new_line: "\n",
         keyword: "return",
         string: "Hello, World!",

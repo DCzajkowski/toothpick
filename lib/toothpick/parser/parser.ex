@@ -18,7 +18,6 @@ defmodule Toothpick.Parser do
     function(tree ++ [{:function_declaration, children}], tail)
   end
 
-  defp function(tree, [{:new_line, _} | tail]), do: function(tree, tail)
   defp function(tree, tail), do: {tree, tail}
 
   # Function's body always starts with a {:punctuator, '->'} and is terminated by a {:punctuator, '.'}.
