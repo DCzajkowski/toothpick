@@ -28,7 +28,8 @@ defmodule Toothpick.Parser do
     {tree ++ [{:function_body, children}], tail}
   end
 
-  defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree ++ [{:function_body, []}], tail}
+  defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]),
+    do: {tree ++ [{:function_body, []}], tail}
 
   def statement(tree, [{:keyword, "return"} | tail]) do
     {child, tail} = expression(tail)
@@ -36,7 +37,8 @@ defmodule Toothpick.Parser do
     statement(tree ++ [{:return_statement, child}], tail)
   end
 
-  def statement(tree, [{:keyword, "if"}, {:new_line, _}, {:punctuator, "."} | tail]), do: {tree, tail}
+  def statement(tree, [{:keyword, "if"}, {:new_line, _}, {:punctuator, "."} | tail]),
+    do: {tree, tail}
 
   def statement(tree, [{:keyword, "if"}, {:new_line, _} | tail]) do
     {condition, tail} = condition(tail)
@@ -59,7 +61,7 @@ defmodule Toothpick.Parser do
     do: {{:condition, {:variable, variable}}, tail}
 
   defp condition([{:identifier, identifier}, {:punctuator, "("} | tail]) do
-    {condition, tail} = function_call(identifier, [{:punctuator, "("}] ++ tail)
+    {condition, tail} = function_call({:identifier, identifier}, [{:punctuator, "("}] ++ tail)
 
     [{:punctuator, ":"} | tail] = tail
 

@@ -171,7 +171,10 @@ defmodule ParserTest do
             yes: {:return_statement, {:integer, "1"}},
             no: [
               if_statement: [
-                condition: {:function_call, [calle: "cond", args: [{:variable, "a"}, {:integer, "4"}]]},
+                condition: {
+                  :function_call,
+                  [calle: {:identifier, "cond"}, args: [{:variable, "a"}, {:integer, "4"}]]
+                },
                 yes: {:return_statement, {:integer, "2"}},
                 no: [
                   if_statement: [
@@ -301,7 +304,10 @@ defmodule ParserTest do
               no: []
             ],
             if_statement: [
-              condition: {:function_call, [calle: "lte", args: [variable: "num", integer: "1"]]},
+              condition: {
+                :function_call,
+                [calle: {:identifier, "lte"}, args: [variable: "num", integer: "1"]]
+              },
               yes: {
                 :return_statement,
                 {
@@ -317,7 +323,7 @@ defmodule ParserTest do
                   condition: {
                     :function_call,
                     [
-                      calle: "contains",
+                      calle: {:identifier, "contains"},
                       args: [
                         function_call: [
                           calle: {:identifier, "range"},
