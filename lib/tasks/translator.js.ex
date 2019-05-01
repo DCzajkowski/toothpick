@@ -37,7 +37,6 @@ defmodule Mix.Tasks.Translate.Js do
     |> Tasks.Helpers.ContentReader.get_content()
     |> Tasks.Helpers.ElixirParser.parse()
     |> Toothpick.Translator.JsTranslator.translate()
-    |> Poison.encode!()
-    |> IO.puts()
+    |> IO.inspect(pretty: true, limit: :infinity)
   end
 end

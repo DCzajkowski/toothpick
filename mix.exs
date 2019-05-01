@@ -25,8 +25,8 @@ defmodule Toothpick.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:poison, "~> 4.0.1"},
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
+      {:estree, "~> 2.6.1"}
     ]
   end
 end

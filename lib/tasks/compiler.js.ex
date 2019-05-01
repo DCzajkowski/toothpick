@@ -39,10 +39,13 @@ defmodule Mix.Tasks.Compile.Js do
   def run(argv) do
     preamble = Toothpick.Translator.JsTranslator.preamble()
     ending = Toothpick.Translator.JsTranslator.ending()
-    content = argv |> Tasks.Helpers.ContentReader.get_content()
-    command = "echo '" <> content <> "' | node node_modules/js-ast-compiler/compile.js"
 
-    {code, 0} = System.cmd("/bin/sh", ["-c", command])
+    code =
+      argv
+      |> Tasks.Helpers.ContentReader.get_content()
+      |> Tasks.Helpers.ElixirParser.parse()
+      |> ESTree.Tools.ESTreeJSONTransformer.convert()
+      |> ESTree.Tools.Generator.generate()
 
     IO.puts(preamble <> code <> ending)
   end
