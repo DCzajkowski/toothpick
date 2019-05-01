@@ -23,8 +23,7 @@ defmodule Mix.Tasks.Toothpick do
   import Toothpick.Translator.JsTranslator, only: [preamble: 0, ending: 0]
 
   def run(argv) do
-    {flags, [filename | _], _} =
-      OptionParser.parse(argv, strict: [output: :string], aliases: [o: :output])
+    {flags, [filename | _], _} = OptionParser.parse(argv, strict: [output: :string], aliases: [o: :output])
 
     code =
       filename
