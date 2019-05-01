@@ -43,4 +43,6 @@ defmodule Mix.Tasks.Toothpick do
       File.write!(output_name, output)
     end
   end
+
+  def main(argv), do: run(argv)
 end

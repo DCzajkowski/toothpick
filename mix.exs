@@ -11,7 +11,8 @@ defmodule Toothpick.MixProject do
       dialyzer: [
         plt_add_apps: [:mix],
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
-      ]
+      ],
+      escript: escript()
     ]
   end
 
@@ -20,6 +21,10 @@ defmodule Toothpick.MixProject do
     [
       extra_applications: [:logger]
     ]
+  end
+
+  defp escript do
+    [main_module: Mix.Tasks.Toothpick]
   end
 
   # Run "mix help deps" to learn about dependencies.
