@@ -8,60 +8,40 @@ defmodule Mix.Tasks.Toothpick do
 
   ## Command-line options
 
-    * `-o [filename]` - displays compiled JS code instead of running it. If
-    the `filename` argument is provided, the output will be written to the
-    `filename`.
+    * `--output [filename]` - writes compiled JS code to the given file.
+    If `filename` is ":stdout", then the output will be written to stdout.
 
   ## Example
 
-  ### Input
-
-      mix toothpick test/stubs/function_without_arguments.tp
-
-  ### Output
-
-      Hello, World!
+      mix toothpick test/stubs/function_without_arguments.tp -o output.js
 
   """
 
   @shortdoc "Translate Toothpick AST to JS AST"
 
   use Mix.Task
+  import Toothpick.Translator.JsTranslator, only: [preamble: 0, ending: 0]
 
   def run(argv) do
-    [filename | flags] = argv
+    {flags, [filename | _], _} =
+      OptionParser.parse(argv, strict: [output: :string], aliases: [o: :output])
 
-    command = """
-    mix compile \
-    && mix tokenize #{filename} \
-    | mix parse \
-    | mix translate.js \
-    | mix compile.js \
-    """
+    code =
+      filename
+      |> File.read!()
+      |> Toothpick.Tokenizer.tokens()
+      |> Toothpick.Parser.parse()
+      |> Toothpick.Translator.JsTranslator.translate()
+      |> ESTree.Tools.ESTreeJSONTransformer.convert()
+      |> ESTree.Tools.Generator.generate()
 
-    command =
-      if Enum.member?(flags, "-o") do
-        index = Enum.find_index(flags, fn el -> el === "-o" end)
+    output_name = flags[:output]
+    output = preamble() <> code <> ending()
 
-        pair = Enum.slice(flags, index, 2)
-
-        if Kernel.length(pair) === 2 do
-          [_, output_filename] = pair
-
-          command <> " > " <> output_filename
-        else
-          command
-        end
-      else
-        command <> " | node"
-      end
-
-    {output, 0} = System.cmd("/bin/sh", ["-c", command])
-
-    if Enum.member?(flags, "--no-stdout") do
-      output
-    else
+    if output_name == ":stdout" do
       IO.puts(output)
+    else
+      File.write!(output_name, output)
     end
   end
 end
