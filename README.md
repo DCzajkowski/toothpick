@@ -1,4 +1,7 @@
 # Toothpick
+## Documentation
+The documentation can be found at https://toothpick.netlify.com.
+
 ## Installation
 ### Prerequisites
 
