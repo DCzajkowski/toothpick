@@ -36,5 +36,5 @@ toothpick-*.tar
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
 
-# Documentations
+# Documentation
 /docs/
