@@ -32,7 +32,7 @@ defmodule Mix.Tasks.Toothpick do
       |> Toothpick.Parser.parse()
       |> Toothpick.Translator.JsTranslator.translate()
       |> ESTree.Tools.ESTreeJSONTransformer.convert()
-      |> ESTree.Tools.Generator.generate()
+      |> ESTree.Tools.Generator.generate(%{indent_level: 2})
 
     output_name = flags[:output]
     output = preamble() <> code <> ending()

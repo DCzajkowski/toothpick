@@ -31,7 +31,7 @@ defmodule Toothpick.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
-      {:estree, "~> 2.6.1"}
+      {:estree, "~> 2.7.0"}
     ]
   end
 end
