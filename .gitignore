@@ -36,6 +36,10 @@ toothpick-*.tar
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
 
+
 # NPM files
 node_modules/
 yarn.lock
+
+# Documentation
+/docs/

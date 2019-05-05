@@ -1,4 +1,11 @@
-# Toothpick
+<p align="center"><img src="https://i.imgur.com/WtjJQz7.png" alt="Toothpick logo" /></p>
+
+## Introduction
+
+Toothpick is a programming language that compiles directly to JavaScript. It provides a modern syntax for purely functional solutions.
+It has a very short list of reserved keywords and tokens which makes it very flexible.
+The documentation can be found at https://toothpick.netlify.com.
+
 ## Installation
 ### Prerequisites
 
