@@ -13,13 +13,13 @@ defmodule Toothpick.Parser.Expression do
   def expression([{:boolean, value} | tail]), do: {{:boolean, value}, tail}
   def expression(tail), do: {nil, tail}
 
-  defp function_call(tree, [{:punctuator, "("} | tail]) do
+  def function_call(tree, [{:punctuator, "("} | tail]) do
     {args, tail} = call_arguments([], tail)
     function = {:function_call, [calle: tree, args: args]}
     function_call(function, tail)
   end
 
-  defp function_call(tree, tail), do: {tree, tail}
+  def function_call(tree, tail), do: {tree, tail}
 
   defp call_arguments(args, [{:punctuator, ")"} | tail]), do: {args, tail}
   defp call_arguments(args, [{:punctuator, ","} | tail]), do: call_arguments(args, tail)

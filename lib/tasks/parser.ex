@@ -47,6 +47,6 @@ defmodule Mix.Tasks.Parse do
     |> Tasks.Helpers.ContentReader.get_content()
     |> Tasks.Helpers.ElixirParser.parse()
     |> Toothpick.Parser.parse()
-    |> IO.inspect(pretty: true)
+    |> IO.inspect(pretty: true, limit: :infinity)
   end
 end

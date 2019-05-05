@@ -1,6 +1,6 @@
-fun abcd @n
-  if @n
-    return 1
+fun abcd @n ->
+  if
+    @n : return 1
   .
 
   return 2
