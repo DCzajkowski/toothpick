@@ -35,3 +35,6 @@ toothpick-*.tar
 # Dialyzer files
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
+
+# Documentation
+/docs/
