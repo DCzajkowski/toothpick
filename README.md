@@ -1,4 +1,3 @@
-# Toothpick
 <p align="center"><img src="https://i.imgur.com/WtjJQz7.png" alt="Toothpick logo" /></p>
 
 ## Introduction
