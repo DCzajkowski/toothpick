@@ -1,0 +1,13 @@
+[
+  function_declaration: [
+    identifier: "main",
+    function_arguments: [],
+    function_body: [
+      if_statement: [
+        condition: {:variable, "cond"},
+        yes: {:return_statement, {:integer, "1"}},
+        no: []
+      ]
+    ]
+  ]
+]

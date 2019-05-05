@@ -1,0 +1,20 @@
+[
+  function_declaration: [
+    identifier: "add",
+    function_arguments: [variable: "a", variable: "b"],
+    function_body: [
+      return_statement: {:function_call,
+       [
+         calle: {:function_call,
+          [
+            calle: {:variable, "a"},
+            args: [
+              function_call: [calle: {:identifier, "stop"}, args: []],
+              variable: "b"
+            ]
+          ]},
+         args: []
+       ]}
+    ]
+  ]
+]

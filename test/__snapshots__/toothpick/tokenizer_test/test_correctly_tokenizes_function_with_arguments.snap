@@ -1,0 +1,18 @@
+[
+  keyword: "fun",
+  identifier: "add",
+  variable: "a",
+  variable: "b",
+  punctuator: "->",
+  new_line: "\n",
+  keyword: "return",
+  identifier: "add",
+  punctuator: "(",
+  variable: "a",
+  punctuator: ",",
+  variable: "b",
+  punctuator: ")",
+  new_line: "\n",
+  punctuator: ".",
+  new_line: "\n"
+]

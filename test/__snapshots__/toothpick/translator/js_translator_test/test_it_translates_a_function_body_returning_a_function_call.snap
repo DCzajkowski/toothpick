@@ -1,0 +1,20 @@
+[
+  %{
+    "argument" => %{
+      "arguments" => [
+        %{"type" => "Literal", "value" => 5},
+        %{"type" => "Literal", "value" => "hello"},
+        %{"type" => "Literal", "value" => true},
+        %{"name" => "variable", "type" => "Identifier"},
+        %{
+          "arguments" => [%{"type" => "Literal", "value" => "world"}],
+          "callee" => %{"name" => "c", "type" => "Identifier"},
+          "type" => "CallExpression"
+        }
+      ],
+      "callee" => %{"name" => "b", "type" => "Identifier"},
+      "type" => "CallExpression"
+    },
+    "type" => "ReturnStatement"
+  }
+]

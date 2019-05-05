@@ -1,0 +1,7 @@
+[
+  function_declaration: [
+    identifier: "main",
+    function_arguments: [],
+    function_body: [return_statement: {:string, "Hello, World!"}]
+  ]
+]

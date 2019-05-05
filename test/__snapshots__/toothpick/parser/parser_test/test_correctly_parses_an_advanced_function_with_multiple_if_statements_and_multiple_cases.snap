@@ -1,0 +1,56 @@
+[
+  function_declaration: [
+    identifier: "main",
+    function_arguments: [],
+    function_body: [
+      if_statement: [
+        condition: {:variable, "cond"},
+        yes: {:return_statement, {:integer, "1"}},
+        no: []
+      ],
+      if_statement: [
+        condition: {:function_call,
+         [calle: {:identifier, "lte"}, args: [variable: "num", integer: "1"]]},
+        yes: {:return_statement,
+         {:function_call,
+          [
+            calle: {:identifier, "format"},
+            args: [string: "$ is not a prime number", variable: "num"]
+          ]}},
+        no: [
+          if_statement: [
+            condition: {:function_call,
+             [
+               calle: {:identifier, "contains"},
+               args: [
+                 function_call: [
+                   calle: {:identifier, "range"},
+                   args: [integer: "2", variable: "num"]
+                 ],
+                 boolean: "true"
+               ]
+             ]},
+            yes: {:return_statement,
+             {:function_call,
+              [
+                calle: {:identifier, "format"},
+                args: [string: "$ is not a prime number", variable: "num"]
+              ]}},
+            no: [
+              if_statement: [
+                condition: {:boolean, "true"},
+                yes: {:return_statement,
+                 {:function_call,
+                  [
+                    calle: {:identifier, "format"},
+                    args: [string: "$ is a prime number", variable: "num"]
+                  ]}},
+                no: []
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
