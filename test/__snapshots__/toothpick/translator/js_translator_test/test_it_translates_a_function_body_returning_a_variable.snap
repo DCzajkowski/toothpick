@@ -1,0 +1,6 @@
+[
+  %{
+    "argument" => %{"name" => "a", "type" => "Identifier"},
+    "type" => "ReturnStatement"
+  }
+]

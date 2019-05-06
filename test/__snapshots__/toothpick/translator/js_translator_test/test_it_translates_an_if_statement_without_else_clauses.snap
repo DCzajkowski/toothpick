@@ -1,0 +1,23 @@
+[
+  %{
+    "alternate" => nil,
+    "consequent" => %{
+      "body" => [
+        %{
+          "argument" => %{"type" => "Literal", "value" => 1},
+          "type" => "ReturnStatement"
+        }
+      ],
+      "type" => "BlockStatement"
+    },
+    "test" => %{
+      "arguments" => [
+        %{"name" => "n", "type" => "Identifier"},
+        %{"type" => "Literal", "value" => 1}
+      ],
+      "callee" => %{"name" => "lte", "type" => "Identifier"},
+      "type" => "CallExpression"
+    },
+    "type" => "IfStatement"
+  }
+]

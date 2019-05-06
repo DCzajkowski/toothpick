@@ -1,0 +1,11 @@
+[
+  keyword: "fun",
+  identifier: "main",
+  punctuator: "->",
+  new_line: "\n",
+  keyword: "return",
+  string: "Hello, World!",
+  new_line: "\n",
+  punctuator: ".",
+  new_line: "\n"
+]

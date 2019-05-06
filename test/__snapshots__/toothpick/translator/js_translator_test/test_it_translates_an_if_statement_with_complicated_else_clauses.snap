@@ -1,0 +1,100 @@
+[
+  %{
+    "alternate" => %{
+      "body" => [
+        %{
+          "alternate" => %{
+            "body" => [
+              %{
+                "alternate" => nil,
+                "consequent" => %{
+                  "body" => [
+                    %{
+                      "argument" => %{
+                        "arguments" => [
+                          %{
+                            "type" => "Literal",
+                            "value" => "$ is a prime number"
+                          },
+                          %{"name" => "num", "type" => "Identifier"}
+                        ],
+                        "callee" => %{
+                          "name" => "format",
+                          "type" => "Identifier"
+                        },
+                        "type" => "CallExpression"
+                      },
+                      "type" => "ReturnStatement"
+                    }
+                  ],
+                  "type" => "BlockStatement"
+                },
+                "test" => %{"type" => "Literal", "value" => true},
+                "type" => "IfStatement"
+              }
+            ],
+            "type" => "BlockStatement"
+          },
+          "consequent" => %{
+            "body" => [
+              %{
+                "argument" => %{
+                  "arguments" => [
+                    %{"type" => "Literal", "value" => "$ is not a prime number"},
+                    %{"name" => "num", "type" => "Identifier"}
+                  ],
+                  "callee" => %{"name" => "format", "type" => "Identifier"},
+                  "type" => "CallExpression"
+                },
+                "type" => "ReturnStatement"
+              }
+            ],
+            "type" => "BlockStatement"
+          },
+          "test" => %{
+            "arguments" => [
+              %{
+                "arguments" => [
+                  %{"type" => "Literal", "value" => 2},
+                  %{"name" => "num", "type" => "Identifier"}
+                ],
+                "callee" => %{"name" => "range", "type" => "Identifier"},
+                "type" => "CallExpression"
+              },
+              %{"type" => "Literal", "value" => true}
+            ],
+            "callee" => %{"name" => "contains", "type" => "Identifier"},
+            "type" => "CallExpression"
+          },
+          "type" => "IfStatement"
+        }
+      ],
+      "type" => "BlockStatement"
+    },
+    "consequent" => %{
+      "body" => [
+        %{
+          "argument" => %{
+            "arguments" => [
+              %{"type" => "Literal", "value" => "$ is not a prime number"},
+              %{"name" => "num", "type" => "Identifier"}
+            ],
+            "callee" => %{"name" => "format", "type" => "Identifier"},
+            "type" => "CallExpression"
+          },
+          "type" => "ReturnStatement"
+        }
+      ],
+      "type" => "BlockStatement"
+    },
+    "test" => %{
+      "arguments" => [
+        %{"name" => "num", "type" => "Identifier"},
+        %{"type" => "Literal", "value" => 1}
+      ],
+      "callee" => %{"name" => "lte", "type" => "Identifier"},
+      "type" => "CallExpression"
+    },
+    "type" => "IfStatement"
+  }
+]

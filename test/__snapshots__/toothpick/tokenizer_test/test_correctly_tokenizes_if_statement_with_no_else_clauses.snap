@@ -1,0 +1,11 @@
+[
+  keyword: "if",
+  variable: "a",
+  punctuator: ":",
+  new_line: "\n",
+  keyword: "return",
+  integer: "1",
+  new_line: "\n",
+  punctuator: ".",
+  new_line: "\n"
+]

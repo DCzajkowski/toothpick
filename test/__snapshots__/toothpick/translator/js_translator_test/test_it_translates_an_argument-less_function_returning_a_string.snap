@@ -1,0 +1,14 @@
+%{
+  "body" => %{
+    "body" => [
+      %{
+        "argument" => %{"type" => "Literal", "value" => "Hello, World!"},
+        "type" => "ReturnStatement"
+      }
+    ],
+    "type" => "BlockStatement"
+  },
+  "id" => %{"name" => "main", "type" => "Identifier"},
+  "params" => [],
+  "type" => "FunctionDeclaration"
+}
