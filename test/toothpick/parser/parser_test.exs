@@ -43,7 +43,6 @@ defmodule ParserTest do
       variable: "b",
       punctuator: "->",
       new_line: "\n",
-      keyword: "return",
       variable: "a",
       punctuator: "(",
       identifier: "stop",
@@ -99,6 +98,56 @@ defmodule ParserTest do
       punctuator: ":",
       keyword: "return",
       integer: "3",
+      new_line: "\n",
+      punctuator: ".",
+      new_line: "\n"
+    )
+  end
+
+  test_snapshot "correctly parses oneline if statement in function" do
+    parse(
+      keyword: "fun",
+      identifier: "main",
+      punctuator: "->",
+      new_line: "\n",
+      keyword: "if",
+      variable: "cond",
+      punctuator: ":",
+      keyword: "return",
+      integer: "1",
+      new_line: "\n",
+      keyword: "return",
+      integer: "2",
+      new_line: "\n",
+      punctuator: ".",
+      new_line: "\n"
+    )
+  end
+
+  test_snapshot "correctly parses multiline if statement in function" do
+    parse(
+      keyword: "fun",
+      identifier: "main",
+      punctuator: "->",
+      new_line: "\n",
+      keyword: "if",
+      variable: "cond",
+      punctuator: ":",
+      new_line: "\n",
+      identifier: "cond",
+      punctuator: "(",
+      variable: "a",
+      punctuator: ",",
+      integer: "4",
+      punctuator: ")",
+      new_line: "\n",
+      keyword: "return",
+      integer: "1",
+      new_line: "\n",
+      punctuator: ".",
+      new_line: "\n",
+      keyword: "return",
+      integer: "2",
       new_line: "\n",
       punctuator: ".",
       new_line: "\n"

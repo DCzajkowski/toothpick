@@ -7,7 +7,8 @@
         condition: {:variable, <<99, 111, 110, 100>>},
         yes: [return_statement: {:integer, <<49>>}],
         no: []
-      ]
+      ],
+      return_statement: {:integer, <<50>>}
     ]
   ]
 ]

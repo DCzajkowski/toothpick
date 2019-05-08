@@ -1,16 +1,19 @@
 {[
    if_statement: [
-     condition: {:variable, "a"},
-     yes: {:return_statement, {:integer, "1"}},
+     condition: {:variable, <<97>>},
+     yes: [return_statement: {:integer, <<49>>}],
      no: [
        if_statement: [
          condition: {:function_call,
-          [calle: {:identifier, "cond"}, args: [variable: "a", integer: "4"]]},
-         yes: {:return_statement, {:integer, "2"}},
+          [
+            calle: {:identifier, <<99, 111, 110, 100>>},
+            args: [variable: <<97>>, integer: <<52>>]
+          ]},
+         yes: [return_statement: {:integer, <<50>>}],
          no: [
            if_statement: [
-             condition: {:boolean, "true"},
-             yes: {:return_statement, {:integer, "3"}},
+             condition: {:boolean, <<116, 114, 117, 101>>},
+             yes: [return_statement: {:integer, <<51>>}],
              no: []
            ]
          ]

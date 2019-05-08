@@ -1,0 +1,21 @@
+[
+  function_declaration: [
+    identifier: <<109, 97, 105, 110>>,
+    function_arguments: [],
+    function_body: [
+      if_statement: [
+        condition: {:variable, <<99, 111, 110, 100>>},
+        yes: [
+          call_statement: {:function_call,
+           [
+             calle: {:identifier, <<99, 111, 110, 100>>},
+             args: [variable: <<97>>, integer: <<52>>]
+           ]},
+          return_statement: {:integer, <<49>>}
+        ],
+        no: []
+      ],
+      return_statement: {:integer, <<50>>}
+    ]
+  ]
+]

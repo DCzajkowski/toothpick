@@ -31,49 +31,57 @@ defmodule Toothpick.Parser do
   defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]),
     do: {tree ++ [{:function_body, []}], tail}
 
-  def statement(tree, [{:keyword, "return"} | tail]) do
-    {child, tail} = expression(tail)
 
-    statement(tree ++ [{:return_statement, child}], tail)
+  def statement(tree, [{:keyword, "if"}, {:new_line, _}  | tail]) do
+    {conditions, tail} = parse_cases(tail)
+    statement(
+      tree ++ conditions,
+      tail
+    )
   end
 
-  def statement(tree, [{:keyword, "if"}, {:new_line, _}, {:punctuator, "."} | tail]),
-    do: {tree, tail}
-
-  def statement(tree, [{:keyword, "if"}, {:new_line, _} | tail]) do
-    {condition, tail} = condition(tail)
-
-    {yes, tail} = single_statement(tail)
-
-    {no, tail} = statement([], [{:keyword, "if"}] ++ tail)
-
+  def statement(tree, [{:keyword, "if"} | tail]) do
+    {condition, tail} = expression(tail)
+    {yes, tail} = case tail do
+      [{:punctuator, ":"}, {:new_line, _} | inner_tail] -> statement([], inner_tail)
+      [{:punctuator, ":"} | inner_tail] -> line_statement(inner_tail)
+    end
     statement(
-      tree ++ [{:if_statement, [condition, {:yes, yes}, {:no, no}]}],
+      tree ++ [{:if_statement, [{:condition, condition}, {:yes, yes}, {:no, []}]}],
       tail
     )
   end
 
   def statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
   def statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
-  def statement(tree, tail), do: {tree, tail}
-
-  defp condition([{:variable, variable}, {:punctuator, ":"} | tail]),
-    do: {{:condition, {:variable, variable}}, tail}
-
-  defp condition([{:identifier, identifier}, {:punctuator, "("} | tail]) do
-    {condition, tail} = function_call({:identifier, identifier}, [{:punctuator, "("}] ++ tail)
-
-    [{:punctuator, ":"} | tail] = tail
-
-    {{:condition, condition}, tail}
+  def statement(tree, []), do: {tree,[]}
+  def statement(tree, tail) do
+    {statement, tail} = line_statement(tail)
+    statement(tree ++ statement, tail)
   end
 
-  defp condition([{:boolean, boolean}, {:punctuator, ":"} | tail]),
-    do: {{:condition, {:boolean, boolean}}, tail}
+  defp parse_cases([{:new_line, _} | tail]), do: parse_cases(tail)
+  defp parse_cases([{:punctuator, "."}, {:new_line, _} | tail]), do: {[],tail}
+  defp parse_cases(tail) do
+    {condition, tail} = expression(tail)
+    [{:punctuator, ":"} | tail] = tail
+    {yes, tail} = line_statement(tail)
+    {no, tail} = parse_cases(tail)
+    {[{:if_statement, [{:condition, condition}, {:yes, yes}, {:no, no}]}], tail}
+  end
 
-  def single_statement([{:keyword, "return"} | tail]) do
+  def line_statement([{:keyword, "return"} | tail]) do
     {child, tail} = expression(tail)
+    {[{:return_statement, child}], tail}
+  end
 
-    {{:return_statement, child}, tail}
+  def line_statement([{:variable, value}, {:punctuator, "("} | tail]) do
+    {call, tail} = function_call({:variable, value}, [{:punctuator, "("} | tail])
+    {[{:call_statement, call}], tail}
+  end
+
+  def line_statement([{:identifier, value}, {:punctuator, "("} | tail]) do
+    {call, tail} = function_call({:identifier, value}, [{:punctuator, "("} | tail])
+    {[{:call_statement, call}], tail}
   end
 end

@@ -1,16 +1,19 @@
 [
   function_declaration: [
-    identifier: "add",
-    function_arguments: [variable: "a", variable: "b"],
+    identifier: <<97, 100, 100>>,
+    function_arguments: [variable: <<97>>, variable: <<98>>],
     function_body: [
-      return_statement: {:function_call,
+      call_statement: {:function_call,
        [
          calle: {:function_call,
           [
-            calle: {:variable, "a"},
+            calle: {:variable, <<97>>},
             args: [
-              function_call: [calle: {:identifier, "stop"}, args: []],
-              variable: "b"
+              function_call: [
+                calle: {:identifier, <<115, 116, 111, 112>>},
+                args: []
+              ],
+              variable: <<98>>
             ]
           ]},
          args: []
