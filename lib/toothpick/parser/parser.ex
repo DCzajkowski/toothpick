@@ -31,9 +31,9 @@ defmodule Toothpick.Parser do
   defp body(tree, [{:punctuator, "."}, {:new_line, _} | tail]),
     do: {tree ++ [{:function_body, []}], tail}
 
-
-  def statement(tree, [{:keyword, "if"}, {:new_line, _}  | tail]) do
+  def statement(tree, [{:keyword, "if"}, {:new_line, _} | tail]) do
     {conditions, tail} = parse_cases(tail)
+
     statement(
       tree ++ conditions,
       tail
@@ -42,10 +42,13 @@ defmodule Toothpick.Parser do
 
   def statement(tree, [{:keyword, "if"} | tail]) do
     {condition, tail} = expression(tail)
-    {yes, tail} = case tail do
-      [{:punctuator, ":"}, {:new_line, _} | inner_tail] -> statement([], inner_tail)
-      [{:punctuator, ":"} | inner_tail] -> line_statement(inner_tail)
-    end
+
+    {yes, tail} =
+      case tail do
+        [{:punctuator, ":"}, {:new_line, _} | inner_tail] -> statement([], inner_tail)
+        [{:punctuator, ":"} | inner_tail] -> line_statement(inner_tail)
+      end
+
     statement(
       tree ++ [{:if_statement, [{:condition, condition}, {:yes, yes}, {:no, []}]}],
       tail
@@ -54,14 +57,16 @@ defmodule Toothpick.Parser do
 
   def statement(tree, [{:new_line, _} | tail]), do: statement(tree, tail)
   def statement(tree, [{:punctuator, "."}, {:new_line, _} | tail]), do: {tree, tail}
-  def statement(tree, []), do: {tree,[]}
+  def statement(tree, []), do: {tree, []}
+
   def statement(tree, tail) do
     {statement, tail} = line_statement(tail)
     statement(tree ++ statement, tail)
   end
 
   defp parse_cases([{:new_line, _} | tail]), do: parse_cases(tail)
-  defp parse_cases([{:punctuator, "."}, {:new_line, _} | tail]), do: {[],tail}
+  defp parse_cases([{:punctuator, "."}, {:new_line, _} | tail]), do: {[], tail}
+
   defp parse_cases(tail) do
     {condition, tail} = expression(tail)
     [{:punctuator, ":"} | tail] = tail
