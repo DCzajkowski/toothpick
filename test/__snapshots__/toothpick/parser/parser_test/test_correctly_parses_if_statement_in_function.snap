@@ -1,11 +1,11 @@
 [
   function_declaration: [
-    identifier: <<109, 97, 105, 110>>,
+    identifier: "main",
     function_arguments: [],
     function_body: [
       if_statement: [
-        condition: {:variable, <<99, 111, 110, 100>>},
-        yes: [return_statement: {:integer, <<49>>}],
+        condition: {:variable, "cond"},
+        yes: [return_statement: {:integer, "1"}],
         no: []
       ]
     ]

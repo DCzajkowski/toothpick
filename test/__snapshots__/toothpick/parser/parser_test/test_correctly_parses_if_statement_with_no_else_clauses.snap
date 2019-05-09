@@ -1,7 +1,7 @@
 {[
    if_statement: [
-     condition: {:variable, <<97>>},
-     yes: [return_statement: {:integer, <<49>>}],
+     condition: {:variable, "a"},
+     yes: [return_statement: {:integer, "1"}],
      no: []
    ]
  ], []}

@@ -1,66 +1,51 @@
 [
   function_declaration: [
-    identifier: <<109, 97, 105, 110>>,
+    identifier: "main",
     function_arguments: [],
     function_body: [
       if_statement: [
-        condition: {:variable, <<99, 111, 110, 100>>},
-        yes: [return_statement: {:integer, <<49>>}],
+        condition: {:variable, "cond"},
+        yes: [return_statement: {:integer, "1"}],
         no: []
       ],
       if_statement: [
         condition: {:function_call,
-         [
-           calle: {:identifier, <<108, 116, 101>>},
-           args: [variable: <<110, 117, 109>>, integer: <<49>>]
-         ]},
+         [calle: {:identifier, "lte"}, args: [variable: "num", integer: "1"]]},
         yes: [
           return_statement: {:function_call,
            [
-             calle: {:identifier, <<102, 111, 114, 109, 97, 116>>},
-             args: [
-               string: <<36, 32, 105, 115, 32, 110, 111, 116, 32, 97, 32, 112,
-                 114, 105, 109, 101, 32, 110, 117, 109, 98, 101, 114>>,
-               variable: <<110, 117, 109>>
-             ]
+             calle: {:identifier, "format"},
+             args: [string: "$ is not a prime number", variable: "num"]
            ]}
         ],
         no: [
           if_statement: [
             condition: {:function_call,
              [
-               calle: {:identifier, <<99, 111, 110, 116, 97, 105, 110, 115>>},
+               calle: {:identifier, "contains"},
                args: [
                  function_call: [
-                   calle: {:identifier, <<114, 97, 110, 103, 101>>},
-                   args: [integer: <<50>>, variable: <<110, 117, 109>>]
+                   calle: {:identifier, "range"},
+                   args: [integer: "2", variable: "num"]
                  ],
-                 boolean: <<116, 114, 117, 101>>
+                 boolean: "true"
                ]
              ]},
             yes: [
               return_statement: {:function_call,
                [
-                 calle: {:identifier, <<102, 111, 114, 109, 97, 116>>},
-                 args: [
-                   string: <<36, 32, 105, 115, 32, 110, 111, 116, 32, 97, 32,
-                     112, 114, 105, 109, 101, 32, 110, 117, 109, 98, 101, 114>>,
-                   variable: <<110, 117, 109>>
-                 ]
+                 calle: {:identifier, "format"},
+                 args: [string: "$ is not a prime number", variable: "num"]
                ]}
             ],
             no: [
               if_statement: [
-                condition: {:boolean, <<116, 114, 117, 101>>},
+                condition: {:boolean, "true"},
                 yes: [
                   return_statement: {:function_call,
                    [
-                     calle: {:identifier, <<102, 111, 114, 109, 97, 116>>},
-                     args: [
-                       string: <<36, 32, 105, 115, 32, 97, 32, 112, 114, 105,
-                         109, 101, 32, 110, 117, 109, 98, 101, 114>>,
-                       variable: <<110, 117, 109>>
-                     ]
+                     calle: {:identifier, "format"},
+                     args: [string: "$ is a prime number", variable: "num"]
                    ]}
                 ],
                 no: []
