@@ -32,7 +32,7 @@ defmodule Toothpick.MixProject do
     [
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
       {:estree, "~> 2.7.0"},
-      {:snapshy, "~> 0.2.1"}
+      {:snapshy, "~> 0.2.2"}
     ]
   end
 end

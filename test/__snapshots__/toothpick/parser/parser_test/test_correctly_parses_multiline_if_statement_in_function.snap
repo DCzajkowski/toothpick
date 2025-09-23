@@ -1,21 +1,18 @@
 [
   function_declaration: [
-    identifier: <<109, 97, 105, 110>>,
+    identifier: "main",
     function_arguments: [],
     function_body: [
       if_statement: [
-        condition: {:variable, <<99, 111, 110, 100>>},
+        condition: {:variable, "cond"},
         yes: [
           call_statement: {:function_call,
-           [
-             calle: {:identifier, <<99, 111, 110, 100>>},
-             args: [variable: <<97>>, integer: <<52>>]
-           ]},
-          return_statement: {:integer, <<49>>}
+           [calle: {:identifier, "cond"}, args: [variable: "a", integer: "4"]]},
+          return_statement: {:integer, "1"}
         ],
         no: []
       ],
-      return_statement: {:integer, <<50>>}
+      return_statement: {:integer, "2"}
     ]
   ]
 ]
